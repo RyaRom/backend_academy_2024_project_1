@@ -1,5 +1,6 @@
 package backend.academy.utils;
 
+import backend.academy.config.GameConfig;
 import backend.academy.data.Word;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ class GameUtilsTest {
     void pickRandomObjectTest() {
         String[] empty = new String[0];
         String[] oneElement = {""};
-        Word[] words = GameUtils.EASY_WORDS;
+        Word[] words = GameConfig.EASY_WORDS;
         Word word = GameUtils.pickRandomObject(words);
 
         assertThrows(IllegalArgumentException.class, () -> GameUtils.pickRandomObject(empty));
