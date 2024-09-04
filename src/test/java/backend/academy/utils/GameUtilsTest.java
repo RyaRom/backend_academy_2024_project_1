@@ -59,13 +59,13 @@ class GameUtilsTest {
 
     @Test
     void readCommandInvalidInput() {
-        BufferedReader invalidInputNonNumeric = new BufferedReader(new StringReader("abc\n12\n"));
+        BufferedReader invalidInputNonNumeric = new BufferedReader(new StringReader("abc\n12\n2"));
         BufferedReader invalidInputOutOfRange = new BufferedReader(new StringReader("15\n7\n"));
 
         Integer resultNonNumeric = GameUtils.readCommand(invalidInputNonNumeric, 1, 10);
         Integer resultOutOfRange = GameUtils.readCommand(invalidInputOutOfRange, 1, 10);
 
-        assertEquals(Integer.valueOf(12), resultNonNumeric);
+        assertEquals(Integer.valueOf(2), resultNonNumeric);
         assertEquals(Integer.valueOf(7), resultOutOfRange);
     }
 

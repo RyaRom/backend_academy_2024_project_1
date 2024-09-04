@@ -3,6 +3,7 @@ package backend.academy.game.state;
 import backend.academy.data.Word;
 import backend.academy.data.enums.GameDifficulty;
 import backend.academy.game.GameContext;
+import lombok.extern.log4j.Log4j2;
 import static backend.academy.config.GameConfig.EASY_WORDS;
 import static backend.academy.config.GameConfig.HARD_WORDS;
 import static backend.academy.config.GameConfig.MEDIUM_WORDS;
@@ -15,6 +16,7 @@ import static backend.academy.utils.GraphicUtils.MAIN_MENU;
 import static backend.academy.utils.GraphicUtils.clearScreen;
 import static backend.academy.utils.GraphicUtils.getThemeMenu;
 
+@Log4j2
 public class PreparationState extends GameState {
     @Override
     public void gameCycle(GameContext gameContext) {
@@ -24,6 +26,7 @@ public class PreparationState extends GameState {
 
         gameContext.difficulty(GameDifficulty.EMPTY);
         gameContext.theme("");
+        log.info("Menu Loaded");
         int mainMenuChoice = readCommand(inputReader, 1, 3);
         switch (mainMenuChoice) {
             case 1 -> nextState(gameContext);
@@ -42,18 +45,23 @@ public class PreparationState extends GameState {
 
         //Themes in menu are shifted by 1
         gameContext.theme(THEMES[themeMenuChoice - 1]);
+        log.info("Theme {} chosen.", THEMES[themeMenuChoice - 1]);
         gameCycle(gameContext);
     }
 
     private void loadDifficultySelector(GameContext gameContext) {
         System.out.println(DIFFICULTY_MENU);
         int difficultyMenuChoice = readCommand(inputReader, 0, 3);
+        GameDifficulty difficulty = GameDifficulty.EMPTY;
         switch (difficultyMenuChoice) {
             case 0 -> gameCycle(gameContext);
-            case 1 -> gameContext.difficulty(GameDifficulty.EASY);
-            case 2 -> gameContext.difficulty(GameDifficulty.MEDIUM);
-            case 3 -> gameContext.difficulty(GameDifficulty.HARD);
+            case 1 -> difficulty = GameDifficulty.EASY;
+            case 2 -> difficulty = GameDifficulty.MEDIUM;
+            case 3 -> difficulty = GameDifficulty.HARD;
         }
+        log.info("Difficulty {} chosen.", difficulty);
+        gameContext.difficulty(difficulty);
+        gameCycle(gameContext);
     }
 
     private void randomiseEmptyOptions(GameContext gameContext) {
@@ -83,6 +91,8 @@ public class PreparationState extends GameState {
         randomiseEmptyOptions(gameContext);
         gameContext.word(
             selectRandomWord(gameContext.difficulty()));
+        log.info("game configured. Difficulty: {}. Theme: {}. Word: {}", gameContext.difficulty(), gameContext.theme(),
+            gameContext.word());
 
         gameContext.state(new InProgressState());
         gameContext.start();

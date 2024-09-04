@@ -6,13 +6,13 @@ import backend.academy.game.state.GameState;
 import backend.academy.game.state.PreparationState;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j2;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @NoArgsConstructor
+@Log4j2
 public class GameContext {
     private GameState state;
 
@@ -29,6 +29,7 @@ public class GameContext {
     }
 
     public void start() {
+        log.info("Game is started");
         state.gameCycle(this);
     }
 }
