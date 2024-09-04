@@ -22,7 +22,9 @@ public class GraphicUtils {
         " \\ \\ / / _ \\| | | | | |  / _ \\ / _ \\/ __| __| |",
         "  \\ V / (_) | |_| | | |_| (_) | (_) \\__ \\ _||_|",
         "   |_| \\___/ \\___/  |____\\___/ \\___/|___/___(_)",
-        "                                               "
+        "                                               ",
+        "1. Restart",
+        "2. Exit"
     );
 
     public static final String VICTORY_SCREEN = String.join(System.lineSeparator(),
@@ -30,7 +32,9 @@ public class GraphicUtils {
         " \\ \\ / / _ \\| | | | \\ \\    / /_ _| \\| | |",
         "  \\ V / (_) | |_| |  \\ \\/\\/ / | || .` |_|",
         "   |_| \\___/ \\___/    \\_/\\_/ |___|_|\\_(_)",
-        "                                         "
+        "                                         ",
+        "1. Restart",
+        "2. Exit"
     );
 
     public static final String[] GAME_STAGES = {
@@ -181,4 +185,30 @@ public class GraphicUtils {
         ),
     };
 
+    public static final String MAIN_MENU = String.join(System.lineSeparator(),
+        "1. Play Game",
+        "2. Select Theme",
+        "3. Select Difficulty",
+        "Enter your choice: "
+    );
+
+    public static final String DIFFICULTY_MENU = String.join(System.lineSeparator(),
+        "Select Difficulty:",
+        "0. Go back",
+        "1. Easy",
+        "2. Medium",
+        "3. Hard",
+        "Enter your choice: "
+    );
+
+    public static String getThemeMenu(String[] themes) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Select theme:").append(System.lineSeparator());
+        stringBuilder.append("0. Go back").append(System.lineSeparator());
+        for (int i = 0; i < themes.length; i++) {
+            stringBuilder.append(i + 1).append(". ").append(themes[i]).append(System.lineSeparator());
+        }
+        stringBuilder.append("Enter your choice: ");
+        return stringBuilder.toString();
+    }
 }
