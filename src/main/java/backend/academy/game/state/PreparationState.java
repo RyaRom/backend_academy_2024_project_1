@@ -3,6 +3,7 @@ package backend.academy.game.state;
 import backend.academy.data.Word;
 import backend.academy.data.enums.GameDifficulty;
 import backend.academy.game.GameContext;
+import java.util.Arrays;
 import lombok.extern.log4j.Log4j2;
 import static backend.academy.config.GameConfig.EASY_WORDS;
 import static backend.academy.config.GameConfig.HARD_WORDS;
@@ -77,20 +78,26 @@ public class PreparationState extends GameState {
         }
     }
 
-    private Word selectRandomWord(GameDifficulty difficulty) {
-        return switch (difficulty) {
-            case EASY -> pickRandomObject(EASY_WORDS);
-            case MEDIUM -> pickRandomObject(MEDIUM_WORDS);
-            case HARD -> pickRandomObject(HARD_WORDS);
+    private Word selectRandomWord(GameContext gameContext) {
+        GameDifficulty difficulty = gameContext.difficulty();
+        Word[] wordlist;
+        switch (difficulty) {
+            case EASY -> wordlist = EASY_WORDS;
+            case MEDIUM -> wordlist = MEDIUM_WORDS;
+            case HARD -> wordlist = HARD_WORDS;
             default -> throw new IllegalStateException("Unexpected value: " + difficulty);
-        };
+        }
+        wordlist =
+            Arrays.stream(wordlist).filter(word -> word.theme().equals(gameContext.theme())).toArray(Word[]::new);
+        log.info("All words filtered by theme and difficulty: {}", Arrays.toString(wordlist));
+        return pickRandomObject(wordlist);
     }
 
     @Override
     public void nextState(GameContext gameContext) {
         randomiseEmptyOptions(gameContext);
         gameContext.word(
-            selectRandomWord(gameContext.difficulty()));
+            selectRandomWord(gameContext));
         log.info("game configured. Difficulty: {}. Theme: {}. Word: {}", gameContext.difficulty(), gameContext.theme(),
             gameContext.word());
 
