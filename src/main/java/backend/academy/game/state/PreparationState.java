@@ -3,6 +3,7 @@ package backend.academy.game.state;
 import backend.academy.data.Word;
 import backend.academy.data.enums.GameDifficulty;
 import backend.academy.game.GameContext;
+import java.util.ArrayList;
 import java.util.Arrays;
 import lombok.extern.log4j.Log4j2;
 import static backend.academy.config.GameConfig.EASY_WORDS;
@@ -22,8 +23,8 @@ public class PreparationState extends GameState {
     @Override
     public void gameCycle(GameContext gameContext) {
         clearScreen();
-        System.out.println(HANGMAN_PREVIEW);
-        System.out.println(MAIN_MENU);
+        System.out.print(HANGMAN_PREVIEW);
+        System.out.print(MAIN_MENU);
 
         gameContext.difficulty(GameDifficulty.EMPTY);
         gameContext.theme("");
@@ -38,7 +39,7 @@ public class PreparationState extends GameState {
 
     private void loadThemeSelector(GameContext gameContext) {
         String themeMenu = getThemeMenu(THEMES);
-        System.out.println(themeMenu);
+        System.out.print(themeMenu);
         int themeMenuChoice = readCommand(inputReader, 0, THEMES.length);
         if (themeMenuChoice == 0) {
             gameCycle(gameContext);
@@ -51,7 +52,7 @@ public class PreparationState extends GameState {
     }
 
     private void loadDifficultySelector(GameContext gameContext) {
-        System.out.println(DIFFICULTY_MENU);
+        System.out.print(DIFFICULTY_MENU);
         int difficultyMenuChoice = readCommand(inputReader, 0, 3);
         GameDifficulty difficulty = GameDifficulty.EMPTY;
         switch (difficultyMenuChoice) {
@@ -101,7 +102,9 @@ public class PreparationState extends GameState {
         log.info("game configured. Difficulty: {}. Theme: {}. Word: {}", gameContext.difficulty(), gameContext.theme(),
             gameContext.word());
 
-        gameContext.state(new InProgressState());
+        String[] emptyWordArray = new String[gameContext.word().content().length()];
+        gameContext.state(
+            new InProgressState(0, false, emptyWordArray, new ArrayList<>()));
         gameContext.start();
     }
 }

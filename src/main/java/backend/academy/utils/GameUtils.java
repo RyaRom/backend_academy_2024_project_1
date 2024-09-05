@@ -9,6 +9,8 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class GameUtils {
 
+    public static final String HELP_COMMAND = "help";
+
     @SafeVarargs
     public static <T> T pickRandomObject(T... objects) {
         if (objects.length < 1) {
@@ -26,7 +28,7 @@ public class GameUtils {
             if (input.matches("[A-Z]")) {
                 return input;
             } else if (input.equals("HELP")) {
-                return "help";
+                return HELP_COMMAND;
             } else {
                 System.out.println("Input wasn't recognized. Write command again: ");
             }
