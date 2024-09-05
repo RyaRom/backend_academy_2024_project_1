@@ -27,8 +27,6 @@ public class GameUtils {
                 return input;
             } else if (input.equals("HELP")) {
                 return "help";
-            } else if (input.equals("EXIT")) {
-                return "exit";
             } else {
                 System.out.println("Input wasn't recognized. Write command again: ");
             }

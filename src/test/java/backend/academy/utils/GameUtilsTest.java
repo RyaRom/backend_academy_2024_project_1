@@ -17,17 +17,14 @@ class GameUtilsTest {
         BufferedReader correctLetter = new BufferedReader(new StringReader("A\n"));
         BufferedReader correctLetterLowerCase = new BufferedReader(new StringReader("a\n"));
         BufferedReader correctHelp = new BufferedReader(new StringReader("HeLP\n"));
-        BufferedReader correctExit = new BufferedReader(new StringReader("EXiT\n"));
 
         String correctLetterResult = GameUtils.readLetter(correctLetter);
         String correctLetterLowerCaseResult = GameUtils.readLetter(correctLetterLowerCase);
         String correctHelpResult = GameUtils.readLetter(correctHelp);
-        String correctExitResult = GameUtils.readLetter(correctExit);
 
         assertEquals("A", correctLetterResult);
         assertEquals("A", correctLetterLowerCaseResult);
         assertEquals("help", correctHelpResult);
-        assertEquals("exit", correctExitResult);
     }
 
     @Test

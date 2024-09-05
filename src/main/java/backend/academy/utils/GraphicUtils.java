@@ -1,6 +1,8 @@
 package backend.academy.utils;
 
 import lombok.experimental.UtilityClass;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @UtilityClass
 public class GraphicUtils {
@@ -200,6 +202,25 @@ public class GraphicUtils {
         "3. Hard",
         "Enter your choice: "
     );
+
+    public static final String WORD_MENU = String.join(System.lineSeparator(),
+        "Word:               %s",
+        "Wrong letters: %s",
+        "Hint: %s   Theme: %s",
+        "");
+
+    public static final String NO_HINT_TEXT = "Enter \"help\" for hint. Enter \"help\" again to disable";
+
+    public static String getHangmanWordString(String[] word) {
+        return Arrays.stream(word).map(letter ->
+        {
+            if (letter.isEmpty()) {
+                return "_";
+            } else {
+                return letter.toUpperCase();
+            }
+        }).collect(Collectors.joining(" "));
+    }
 
     public static String getThemeMenu(String[] themes) {
         StringBuilder stringBuilder = new StringBuilder();
