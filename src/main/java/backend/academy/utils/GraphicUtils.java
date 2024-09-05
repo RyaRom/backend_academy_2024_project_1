@@ -205,8 +205,12 @@ public class GraphicUtils {
 
     public static final String WORD_MENU = String.join(System.lineSeparator(),
         "Word:               %s",
+        "",
         "Wrong letters: %s",
+        "",
         "Hint: %s   Theme: %s",
+        "",
+        "Difficulty: %s                 Attempts remaining: %s",
         "");
 
     public static final String NO_HINT_TEXT = "Enter \"help\" for hint. Enter \"help\" again to disable";
@@ -214,7 +218,7 @@ public class GraphicUtils {
     public static String getHangmanWordString(String[] word) {
         return Arrays.stream(word).map(letter ->
         {
-            if (letter.isEmpty()) {
+            if (letter == null || letter.isEmpty()) {
                 return "_";
             } else {
                 return letter.toUpperCase();

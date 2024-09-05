@@ -7,6 +7,8 @@ import lombok.experimental.UtilityClass;
 public class GameConfig {
     public static final String[] THEMES = {"Science", "Food", "Biology", "Animals"};
 
+    public static final Integer STAGES = 12;
+
     public static final Word[] EASY_WORDS = {
         new Word("Sun", "Science", "The star at the center of our solar system."),
         new Word("Star", "Science", "A celestial body that emits light."),

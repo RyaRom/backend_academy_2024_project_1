@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import static backend.academy.config.GameConfig.STAGES;
 import static backend.academy.utils.GraphicUtils.*;
 import static backend.academy.utils.GameUtils.*;
 
@@ -77,7 +79,9 @@ public class InProgressState extends GameState {
         String guessedLetters = String.join(", ", wrongLetters);
         String hint = hintEnabled ? gameContext.word().hint() : NO_HINT_TEXT;
         String theme = gameContext.theme();
-        String menu = WORD_MENU.formatted(wordLetters, guessedLetters, hint, theme);
+        String difficulty = gameContext.difficulty().toString().toLowerCase(Locale.ROOT);
+        String attempts = String.valueOf(STAGES - gameStage);
+        String menu = WORD_MENU.formatted(wordLetters, guessedLetters, hint, theme, difficulty, attempts);
         System.out.println(menu);
     }
 }
