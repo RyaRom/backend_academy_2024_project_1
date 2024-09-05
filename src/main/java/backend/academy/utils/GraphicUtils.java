@@ -1,8 +1,8 @@
 package backend.academy.utils;
 
-import lombok.experimental.UtilityClass;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class GraphicUtils {
@@ -210,7 +210,7 @@ public class GraphicUtils {
         "",
         "Hint: %s   Theme: %s",
         "",
-        "Difficulty: %s                 Attempts remaining: %s",
+        "Difficulty: %s                 Lives remaining: %s",
         "");
 
     public static final String NO_HINT_TEXT = "Enter \"help\" for hint. Enter \"help\" again to disable";

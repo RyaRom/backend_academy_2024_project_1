@@ -35,4 +35,9 @@ public class GameContext {
         log.info("Game is started");
         state.gameCycle(this);
     }
+
+    public void finish() {
+        log.info("Game is finished");
+        state.gameCycle(this);
+    }
 }

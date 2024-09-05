@@ -1,6 +1,7 @@
 package backend.academy.game.state;
 
 import backend.academy.game.GameContext;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -30,7 +31,9 @@ public class InProgressState extends GameState {
 
     @Override
     public void gameCycle(GameContext gameContext) {
-        inProgressValidation(gameContext);
+        if (inProgressValidation(gameContext)) {
+            return;
+        }
 
         clearScreen();
         System.out.print(GAME_STAGES[gameStage]);
@@ -43,8 +46,22 @@ public class InProgressState extends GameState {
 
     }
 
-    private void inProgressValidation(GameContext gameContext) {
+    private void finishGame(GameContext gameContext, boolean isVictory) {
+        gameContext.state(new FinishedState(isVictory));
+        gameContext.finish();
+    }
 
+    private boolean inProgressValidation(GameContext gameContext) {
+        if (Arrays.stream(guessedLetters).noneMatch(String::isEmpty)) {
+            log.info("Game finished. Victory");
+            finishGame(gameContext, true);
+            return true;
+        } else if (STAGES - gameStage < 0) {
+            log.info("Game finished. Death");
+            finishGame(gameContext, false);
+            return true;
+        }
+        return false;
     }
 
     private void readInput(GameContext gameContext) {

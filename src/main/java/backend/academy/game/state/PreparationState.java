@@ -26,7 +26,6 @@ public class PreparationState extends GameState {
         System.out.print(HANGMAN_PREVIEW);
         System.out.print(MAIN_MENU);
 
-
         log.info("Menu Loaded");
         int mainMenuChoice = readCommand(inputReader, 1, 3);
         switch (mainMenuChoice) {
@@ -106,6 +105,7 @@ public class PreparationState extends GameState {
             gameContext.word());
 
         String[] emptyWordArray = new String[gameContext.word().content().length()];
+        Arrays.fill(emptyWordArray, "");
         gameContext.state(
             new InProgressState(0, false, emptyWordArray, new HashSet<>()));
         gameContext.start();
