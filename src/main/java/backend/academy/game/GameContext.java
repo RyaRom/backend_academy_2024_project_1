@@ -24,6 +24,9 @@ public class GameContext {
 
     public void init() {
         state = new PreparationState();
+        difficulty = GameDifficulty.EMPTY;
+        theme = "";
+
         state.gameCycle(this);
         start();
     }

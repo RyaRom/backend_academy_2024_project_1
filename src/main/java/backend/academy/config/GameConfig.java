@@ -69,7 +69,7 @@ public class GameConfig {
         new Word("Axolotl", "Animals", "A type of salamander known for its regenerative abilities."),
         new Word("Thermodynamics", "Science", "The study of heat and energy transfer."),
         new Word("Chameleon", "Animals", "A lizard known for changing its skin color."),
-        new Word("Foie Gras", "Food", "A French delicacy made from the liver of a fattened duck or goose."),
+        new Word("Casumartzu", "Food", "Traditional Sardinian sheep milk cheese ."),
         new Word("Platypus", "Animals", "An egg-laying mammal native to Australia."),
         new Word("Homeostasis", "Biology", "The process of maintaining a stable internal environment."),
         new Word("Kimchi", "Food", "A traditional Korean dish of fermented vegetables."),

@@ -3,8 +3,8 @@ package backend.academy.game.state;
 import backend.academy.data.Word;
 import backend.academy.data.enums.GameDifficulty;
 import backend.academy.game.GameContext;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import lombok.extern.log4j.Log4j2;
 import static backend.academy.config.GameConfig.EASY_WORDS;
 import static backend.academy.config.GameConfig.HARD_WORDS;
@@ -26,8 +26,7 @@ public class PreparationState extends GameState {
         System.out.print(HANGMAN_PREVIEW);
         System.out.print(MAIN_MENU);
 
-        gameContext.difficulty(GameDifficulty.EMPTY);
-        gameContext.theme("");
+
         log.info("Menu Loaded");
         int mainMenuChoice = readCommand(inputReader, 1, 3);
         switch (mainMenuChoice) {
@@ -96,15 +95,19 @@ public class PreparationState extends GameState {
 
     @Override
     public void nextState(GameContext gameContext) {
+        log.info("Before game configuration. Difficulty: {}. Theme: {}.", gameContext.difficulty(),
+            gameContext.theme());
+
         randomiseEmptyOptions(gameContext);
         gameContext.word(
             selectRandomWord(gameContext));
+
         log.info("game configured. Difficulty: {}. Theme: {}. Word: {}", gameContext.difficulty(), gameContext.theme(),
             gameContext.word());
 
         String[] emptyWordArray = new String[gameContext.word().content().length()];
         gameContext.state(
-            new InProgressState(0, false, emptyWordArray, new ArrayList<>()));
+            new InProgressState(0, false, emptyWordArray, new HashSet<>()));
         gameContext.start();
     }
 }
