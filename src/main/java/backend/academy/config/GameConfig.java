@@ -4,10 +4,17 @@ import backend.academy.data.Word;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
+@SuppressWarnings("MultipleStringLiterals")
 public class GameConfig {
     public static final String[] THEMES = {"Science", "Food", "Biology", "Animals"};
 
     public static final Integer STAGES = 12;
+
+    public static final Integer EASY_MODE_STEPS = 1;
+
+    public static final Integer MEDIUM_MODE_STEPS = 2;
+
+    public static final Integer HARD_MODE_STEPS = 3;
 
     public static final Word[] EASY_WORDS = {
         new Word("Sun", "Science", "The star at the center of our solar system."),

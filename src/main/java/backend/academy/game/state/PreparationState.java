@@ -19,26 +19,31 @@ import static backend.academy.utils.GraphicUtils.clearScreen;
 import static backend.academy.utils.GraphicUtils.getThemeMenu;
 
 @Log4j2
+@SuppressWarnings("MagicNumber")
 public class PreparationState extends GameState {
     @Override
     public void gameCycle(GameContext gameContext) {
-        clearScreen();
-        System.out.print(HANGMAN_PREVIEW);
-        System.out.print(MAIN_MENU);
+        if (Thread.currentThread().isInterrupted()) {
+            return;
+        }
+        clearScreen(gameContext.outputWriter());
+        gameContext.outputWriter().print(HANGMAN_PREVIEW);
+        gameContext.outputWriter().print(MAIN_MENU);
 
         log.info("Menu Loaded");
-        int mainMenuChoice = readCommand(inputReader, 1, 3);
+        int mainMenuChoice = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 1, 3);
         switch (mainMenuChoice) {
             case 1 -> nextState(gameContext);
             case 2 -> loadThemeSelector(gameContext);
             case 3 -> loadDifficultySelector(gameContext);
+            default -> gameCycle(gameContext);
         }
     }
 
     private void loadThemeSelector(GameContext gameContext) {
         String themeMenu = getThemeMenu(THEMES);
-        System.out.print(themeMenu);
-        int themeMenuChoice = readCommand(inputReader, 0, THEMES.length);
+        gameContext.outputWriter().print(themeMenu);
+        int themeMenuChoice = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 0, THEMES.length);
         if (themeMenuChoice == 0) {
             gameCycle(gameContext);
         }
@@ -50,14 +55,18 @@ public class PreparationState extends GameState {
     }
 
     private void loadDifficultySelector(GameContext gameContext) {
-        System.out.print(DIFFICULTY_MENU);
-        int difficultyMenuChoice = readCommand(inputReader, 0, 3);
+        gameContext.outputWriter().print(DIFFICULTY_MENU);
+        int difficultyMenuChoice = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 0, 3);
         GameDifficulty difficulty = GameDifficulty.EMPTY;
         switch (difficultyMenuChoice) {
             case 0 -> gameCycle(gameContext);
             case 1 -> difficulty = GameDifficulty.EASY;
             case 2 -> difficulty = GameDifficulty.MEDIUM;
             case 3 -> difficulty = GameDifficulty.HARD;
+            default -> {
+                gameCycle(gameContext);
+                return;
+            }
         }
         log.info("Difficulty {} chosen.", difficulty);
         gameContext.difficulty(difficulty);
@@ -108,6 +117,8 @@ public class PreparationState extends GameState {
         Arrays.fill(emptyWordArray, "");
         gameContext.state(
             new InProgressState(0, false, emptyWordArray, new HashSet<>()));
-        gameContext.start();
+
+        log.info("Game is started");
+        gameContext.state().gameCycle(gameContext);
     }
 }

@@ -4,6 +4,8 @@ import backend.academy.data.Word;
 import backend.academy.data.enums.GameDifficulty;
 import backend.academy.game.state.GameState;
 import backend.academy.game.state.PreparationState;
+import java.io.BufferedReader;
+import java.io.PrintStream;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,22 +24,19 @@ public class GameContext {
 
     private Word word;
 
-    public void init() {
+    private BufferedReader inputReader;
+
+    private PrintStream outputWriter;
+
+    public void init(BufferedReader inputReader, PrintStream outputWriter) {
+
+        this.inputReader = inputReader;
+        this.outputWriter = outputWriter;
+
         state = new PreparationState();
         difficulty = GameDifficulty.EMPTY;
         theme = "";
 
-        state.gameCycle(this);
-        start();
-    }
-
-    public void start() {
-        log.info("Game is started");
-        state.gameCycle(this);
-    }
-
-    public void finish() {
-        log.info("Game is finished");
         state.gameCycle(this);
     }
 }

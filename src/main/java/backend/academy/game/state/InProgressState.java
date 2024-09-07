@@ -9,6 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
+import static backend.academy.config.GameConfig.EASY_MODE_STEPS;
+import static backend.academy.config.GameConfig.HARD_MODE_STEPS;
+import static backend.academy.config.GameConfig.MEDIUM_MODE_STEPS;
 import static backend.academy.config.GameConfig.STAGES;
 import static backend.academy.utils.GameUtils.HELP_COMMAND;
 import static backend.academy.utils.GameUtils.readLetter;
@@ -25,18 +28,21 @@ import static backend.academy.utils.GraphicUtils.getHangmanWordString;
 @Log4j2
 public class InProgressState extends GameState {
     private Integer gameStage;
+
     private Boolean hintEnabled;
+
     private String[] guessedLetters;
+
     private Set<String> wrongLetters;
 
     @Override
     public void gameCycle(GameContext gameContext) {
-        if (inProgressValidation(gameContext)) {
+        if (Thread.currentThread().isInterrupted() || inProgressValidation(gameContext)) {
             return;
         }
 
-        clearScreen();
-        System.out.print(GAME_STAGES[gameStage]);
+        clearScreen(gameContext.outputWriter());
+        gameContext.outputWriter().print(GAME_STAGES[gameStage]);
         printGameMenu(gameContext);
         readInput(gameContext);
     }
@@ -48,7 +54,9 @@ public class InProgressState extends GameState {
 
     private void finishGame(GameContext gameContext, boolean isVictory) {
         gameContext.state(new FinishedState(isVictory));
-        gameContext.finish();
+
+        log.info("Game is finished");
+        gameContext.state().gameCycle(gameContext);
     }
 
     private boolean inProgressValidation(GameContext gameContext) {
@@ -65,8 +73,8 @@ public class InProgressState extends GameState {
     }
 
     private void readInput(GameContext gameContext) {
-        String letter = readLetter(inputReader);
-        if (letter.equals(HELP_COMMAND)) {
+        String letter = readLetter(gameContext.inputReader(), gameContext.outputWriter());
+        if (HELP_COMMAND.equals(letter)) {
             hintEnabled = !hintEnabled;
             gameCycle(gameContext);
         }
@@ -83,9 +91,10 @@ public class InProgressState extends GameState {
         log.info("Letter {} is incorrect. Word: {}.", letter, gameContext.word().content());
         wrongLetters.add(letter);
         switch (gameContext.difficulty()) {
-            case EASY -> gameStage++;
-            case MEDIUM -> gameStage += 2;
-            case HARD -> gameStage += 3;
+            case EASY -> gameStage += EASY_MODE_STEPS;
+            case MEDIUM -> gameStage += MEDIUM_MODE_STEPS;
+            case HARD -> gameStage += HARD_MODE_STEPS;
+            default -> throw new IllegalStateException("Somehow difficulty is empty");
         }
     }
 
@@ -101,12 +110,12 @@ public class InProgressState extends GameState {
 
     private void printGameMenu(GameContext gameContext) {
         String wordLetters = getHangmanWordString(guessedLetters);
-        String guessedLetters = String.join(", ", wrongLetters);
+        String wrongLettersString = String.join(", ", wrongLetters);
         String hint = hintEnabled ? gameContext.word().hint() : NO_HINT_TEXT;
         String theme = gameContext.theme();
         String difficulty = gameContext.difficulty().toString().toLowerCase(Locale.ROOT);
         String attempts = String.valueOf(STAGES - gameStage);
-        String menu = WORD_MENU.formatted(wordLetters, guessedLetters, hint, theme, difficulty, attempts);
-        System.out.println(menu);
+        String menu = WORD_MENU.formatted(wordLetters, wrongLettersString, hint, theme, difficulty, attempts);
+        gameContext.outputWriter().println(menu);
     }
 }

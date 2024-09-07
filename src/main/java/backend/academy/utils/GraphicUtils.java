@@ -1,10 +1,12 @@
 package backend.academy.utils;
 
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
+@SuppressWarnings("MultipleStringLiterals")
 public class GraphicUtils {
     public static final String HANGMAN_PREVIEW = String.join(System.lineSeparator(),
         " ░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓███████▓▒░ ░▒▓██████▓▒░░▒▓██████████████▓▒░ ░▒▓██████▓▒░░▒▓███████▓▒░  ",
@@ -215,9 +217,10 @@ public class GraphicUtils {
 
     public static final String NO_HINT_TEXT = "Enter \"help\" for hint. Enter \"help\" again to disable";
 
+    private static final Integer IDE_CLEAN_TERMINAL = 50;
+
     public static String getHangmanWordString(String[] word) {
-        return Arrays.stream(word).map(letter ->
-        {
+        return Arrays.stream(word).map(letter -> {
             if (letter == null || letter.isEmpty()) {
                 return "_";
             } else {
@@ -237,13 +240,13 @@ public class GraphicUtils {
         return stringBuilder.toString();
     }
 
-    public static void clearScreen() {
+    public static void clearScreen(PrintStream outputWriter) {
         //for IDE's terminal
-        for (int i = 0; i < 100; i++) {
-            System.out.println();
+        for (int i = 0; i < IDE_CLEAN_TERMINAL; i++) {
+            outputWriter.println();
         }
 
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        outputWriter.print("\033[H\033[2J");
+        outputWriter.flush();
     }
 }
