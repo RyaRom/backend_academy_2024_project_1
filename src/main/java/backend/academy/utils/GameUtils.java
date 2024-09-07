@@ -21,7 +21,7 @@ public class GameUtils {
         return objects[index];
     }
 
-    @SneakyThrows public String readLetter(BufferedReader inputReader) {
+    @SneakyThrows public static String readLetter(BufferedReader inputReader) {
         while (true) {
             String input = inputReader.readLine();
             input = input.toUpperCase(Locale.ROOT);
@@ -35,7 +35,7 @@ public class GameUtils {
         }
     }
 
-    @SneakyThrows public Integer readCommand(BufferedReader inputReader, int lowerBound, int upperBound) {
+    @SneakyThrows public static Integer readCommand(BufferedReader inputReader, int lowerBound, int upperBound) {
         while (true) {
             String input = inputReader.readLine();
             if (input.matches("\\d+")) {
