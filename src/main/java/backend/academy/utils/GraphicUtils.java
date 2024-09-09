@@ -22,6 +22,8 @@ public class GraphicUtils {
     );
 
     public static final String DEATH_SCREEN = String.join(System.lineSeparator(),
+        "              The word was: \"%s\"",
+        "",
         " __   _____  _   _   _    ___   ___  ___ ___ _ ",
         " \\ \\ / / _ \\| | | | | |  / _ \\ / _ \\/ __| __| |",
         "  \\ V / (_) | |_| | | |_| (_) | (_) \\__ \\ _||_|",
@@ -32,6 +34,8 @@ public class GraphicUtils {
     );
 
     public static final String VICTORY_SCREEN = String.join(System.lineSeparator(),
+        "              The word was: \"%s\"",
+        "",
         " __   _____  _   _  __      _____ _  _ _ ",
         " \\ \\ / / _ \\| | | | \\ \\    / /_ _| \\| | |",
         "  \\ V / (_) | |_| |  \\ \\/\\/ / | || .` |_|",

@@ -7,6 +7,7 @@ import lombok.Setter;
 import static backend.academy.utils.GameUtils.readCommand;
 import static backend.academy.utils.GraphicUtils.DEATH_SCREEN;
 import static backend.academy.utils.GraphicUtils.VICTORY_SCREEN;
+import static backend.academy.utils.GraphicUtils.clearScreen;
 
 @RequiredArgsConstructor
 @Getter
@@ -16,13 +17,14 @@ public class FinishedState extends GameState {
 
     @Override
     public void gameCycle(GameContext gameContext) {
+        clearScreen(gameContext.outputWriter());
         if (Thread.currentThread().isInterrupted()) {
             return;
         }
         if (isVictory) {
-            gameContext.outputWriter().println(VICTORY_SCREEN);
+            gameContext.outputWriter().println(VICTORY_SCREEN.formatted(gameContext.word().content()));
         } else {
-            gameContext.outputWriter().println(DEATH_SCREEN);
+            gameContext.outputWriter().println(DEATH_SCREEN.formatted(gameContext.word().content()));
         }
 
         int menuChose = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 1, 2);
