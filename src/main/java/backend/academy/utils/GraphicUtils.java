@@ -229,6 +229,9 @@ public class GraphicUtils {
     private static final Integer IDE_CLEAN_TERMINAL = 50;
 
     public static String getHangmanWordString(String[] word) {
+        if (word.length < 1) {
+            throw new IllegalArgumentException("No string from the empty array");
+        }
         return Arrays.stream(word).map(letter -> {
             if (letter == null || letter.isEmpty()) {
                 return "_";
@@ -239,10 +242,16 @@ public class GraphicUtils {
     }
 
     public static String getThemeMenu(String[] themes) {
+        if (themes.length < 1) {
+            throw new IllegalArgumentException("No string from the empty array");
+        }
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Select theme:").append(System.lineSeparator());
         stringBuilder.append("0. Go back").append(System.lineSeparator());
         for (int i = 0; i < themes.length; i++) {
+            if (themes[i] == null || themes[i].isEmpty()) {
+                continue;
+            }
             stringBuilder.append(i + 1).append(". ").append(themes[i]).append(System.lineSeparator());
         }
         stringBuilder.append("Enter your choice: ");
