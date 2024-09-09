@@ -34,7 +34,7 @@ public class GameUtils {
             input = input.toUpperCase(Locale.ROOT).trim();
             if (input.matches("[A-Z]")) {
                 return input;
-            } else if (HELP_COMMAND.toUpperCase().equals(input) || EXIT_COMMAND.toUpperCase().equals(input)) {
+            } else if (HELP_COMMAND.equalsIgnoreCase(input) || EXIT_COMMAND.equalsIgnoreCase(input)) {
                 return input.toLowerCase();
             } else {
                 outputWriter.print(INPUT_NOT_RECOGNIZED);
