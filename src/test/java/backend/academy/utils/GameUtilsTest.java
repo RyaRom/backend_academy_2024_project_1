@@ -7,7 +7,8 @@ import java.io.PrintStream;
 import java.io.StringReader;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
-import static backend.academy.utils.GameUtils.HELP_COMMAND;
+import static backend.academy.config.GameConfig.EXIT_COMMAND;
+import static backend.academy.config.GameConfig.HELP_COMMAND;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,14 +22,17 @@ class GameUtilsTest {
         BufferedReader correctLetter = new BufferedReader(new StringReader("A\n"));
         BufferedReader correctLetterLowerCase = new BufferedReader(new StringReader("a\n"));
         BufferedReader correctHelp = new BufferedReader(new StringReader("HeLP\n"));
+        BufferedReader correctExit = new BufferedReader(new StringReader("   ExiT \n"));
 
         String correctLetterResult = GameUtils.readLetter(correctLetter, OUTPUT_WRITER);
         String correctLetterLowerCaseResult = GameUtils.readLetter(correctLetterLowerCase, OUTPUT_WRITER);
         String correctHelpResult = GameUtils.readLetter(correctHelp, OUTPUT_WRITER);
+        String correctExitResult = GameUtils.readLetter(correctExit, OUTPUT_WRITER);
 
         assertEquals("A", correctLetterResult);
         assertEquals("A", correctLetterLowerCaseResult);
         assertEquals(HELP_COMMAND, correctHelpResult);
+        assertEquals(EXIT_COMMAND, correctExitResult);
     }
 
     @Test

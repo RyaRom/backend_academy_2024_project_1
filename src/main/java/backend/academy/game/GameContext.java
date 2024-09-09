@@ -5,6 +5,7 @@ import backend.academy.data.enums.GameDifficulty;
 import backend.academy.game.state.GameState;
 import backend.academy.game.state.PreparationState;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintStream;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,5 +39,15 @@ public class GameContext {
         theme = "";
 
         state.gameCycle(this);
+    }
+
+    public void finish() {
+        try {
+            inputReader.close();
+            outputWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Thread.currentThread().interrupt();
     }
 }

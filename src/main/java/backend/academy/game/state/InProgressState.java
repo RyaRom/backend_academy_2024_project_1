@@ -10,10 +10,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import static backend.academy.config.GameConfig.EASY_MODE_STEPS;
+import static backend.academy.config.GameConfig.EXIT_COMMAND;
 import static backend.academy.config.GameConfig.HARD_MODE_STEPS;
+import static backend.academy.config.GameConfig.HELP_COMMAND;
 import static backend.academy.config.GameConfig.MEDIUM_MODE_STEPS;
 import static backend.academy.config.GameConfig.STAGES;
-import static backend.academy.utils.GameUtils.HELP_COMMAND;
 import static backend.academy.utils.GameUtils.readLetter;
 import static backend.academy.utils.GraphicUtils.GAME_STAGES;
 import static backend.academy.utils.GraphicUtils.NO_HINT_TEXT;
@@ -74,9 +75,13 @@ public class InProgressState extends GameState {
 
     private void readInput(GameContext gameContext) {
         String letter = readLetter(gameContext.inputReader(), gameContext.outputWriter());
+        log.info("Read letter {}", letter);
         if (HELP_COMMAND.equals(letter)) {
             hintEnabled = !hintEnabled;
             gameCycle(gameContext);
+        }
+        if (EXIT_COMMAND.equals(letter)) {
+            gameContext.finish();
         }
         String wordText = gameContext.word().content();
         if (!wordText.toUpperCase(Locale.ROOT).contains(letter)) {

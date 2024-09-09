@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import lombok.experimental.UtilityClass;
+import static backend.academy.config.GameConfig.*;
 
 @UtilityClass
 @SuppressWarnings("MultipleStringLiterals")
@@ -217,6 +218,8 @@ public class GraphicUtils {
         "Hint: %s   Theme: %s",
         "",
         "Difficulty: %s                 Lives remaining: %s",
+        "",
+        "Write \"exit\" to leave game",
         "");
 
     public static final String NO_HINT_TEXT = "Enter \"help\" for hint. Enter \"help\" again to disable";

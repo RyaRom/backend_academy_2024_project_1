@@ -6,6 +6,10 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 @SuppressWarnings("MultipleStringLiterals")
 public class GameConfig {
+    public static final String HELP_COMMAND = "help";
+
+    public static final String EXIT_COMMAND = "exit";
+
     public static final String[] THEMES = {"Science", "Food", "Biology", "Animals"};
 
     public static final Integer STAGES = 12;

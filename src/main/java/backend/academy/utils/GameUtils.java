@@ -6,12 +6,12 @@ import java.security.SecureRandom;
 import java.util.Locale;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
+import static backend.academy.config.GameConfig.EXIT_COMMAND;
+import static backend.academy.config.GameConfig.HELP_COMMAND;
 
 @UtilityClass
 @SuppressWarnings("MultipleStringLiterals")
 public class GameUtils {
-
-    public static final String HELP_COMMAND = "help";
 
     private static final SecureRandom RANDOM = new SecureRandom();
 
@@ -31,13 +31,13 @@ public class GameUtils {
             if (input == null) {
                 continue;
             }
-            input = input.toUpperCase(Locale.ROOT);
+            input = input.toUpperCase(Locale.ROOT).trim();
             if (input.matches("[A-Z]")) {
                 return input;
-            } else if ("HELP".equals(input)) {
-                return HELP_COMMAND;
+            } else if (HELP_COMMAND.toUpperCase().equals(input) || EXIT_COMMAND.toUpperCase().equals(input)) {
+                return input.toLowerCase();
             } else {
-                outputWriter.println("Input wasn't recognized. Write command again: ");
+                outputWriter.print("Input wasn't recognized. Write command again: ");
             }
         }
     }
@@ -53,13 +53,14 @@ public class GameUtils {
             if (input == null) {
                 continue;
             }
+            input = input.trim();
             if (input.matches("\\d+")) {
                 int command = Integer.parseInt(input);
                 if (command >= lowerBound && command <= upperBound) {
                     return command;
                 }
             }
-            outputWriter.println("Input wasn't recognized. Write command again: ");
+            outputWriter.print("Input wasn't recognized. Write command again: ");
         }
     }
 }

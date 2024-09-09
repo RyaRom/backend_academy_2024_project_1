@@ -30,10 +30,7 @@ public class FinishedState extends GameState {
         int menuChose = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 1, 2);
         switch (menuChose) {
             case 1 -> nextState(gameContext);
-            case 2 -> {
-                gameContext.outputWriter().close();
-                Thread.currentThread().interrupt();
-            }
+            case 2 -> gameContext.finish();
             default -> gameCycle(gameContext);
         }
     }
