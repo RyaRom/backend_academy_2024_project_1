@@ -2,9 +2,8 @@ package backend.academy.game.state;
 
 import backend.academy.game.GameContext;
 
-public abstract class GameState {
+public interface GameState {
+    void gameCycle(GameContext gameContext);
 
-    abstract public void gameCycle(GameContext gameContext);
-
-    abstract public void nextState(GameContext gameContext);
+    void nextState(GameContext gameContext);
 }

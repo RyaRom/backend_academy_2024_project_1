@@ -5,6 +5,7 @@ import backend.academy.data.enums.GameDifficulty;
 import backend.academy.game.GameContext;
 import java.util.Arrays;
 import java.util.HashSet;
+import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import static backend.academy.config.GameConfig.EASY_WORDS;
 import static backend.academy.config.GameConfig.HARD_WORDS;
@@ -19,8 +20,9 @@ import static backend.academy.utils.GraphicUtils.clearScreen;
 import static backend.academy.utils.GraphicUtils.getThemeMenu;
 
 @Log4j2
+@NoArgsConstructor
 @SuppressWarnings("MagicNumber")
-public class PreparationState extends GameState {
+public class PreparationState implements GameState {
     @Override
     public void gameCycle(GameContext gameContext) {
         if (Thread.currentThread().isInterrupted()) {

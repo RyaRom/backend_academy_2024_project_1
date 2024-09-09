@@ -12,7 +12,7 @@ import static backend.academy.utils.GraphicUtils.clearScreen;
 @RequiredArgsConstructor
 @Getter
 @Setter
-public class FinishedState extends GameState {
+public class FinishedState implements GameState {
     private final boolean isVictory;
 
     @Override

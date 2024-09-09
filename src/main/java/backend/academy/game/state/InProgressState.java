@@ -27,7 +27,7 @@ import static backend.academy.utils.GraphicUtils.getHangmanWordString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Log4j2
-public class InProgressState extends GameState {
+public class InProgressState implements GameState {
     private Integer gameStage;
 
     private Boolean hintEnabled;
