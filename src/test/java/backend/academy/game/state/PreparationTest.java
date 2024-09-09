@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class PreparationStateTest {
+class PreparationTest {
     private ByteArrayOutputStream outputStream;
 
     private PrintStream writer;
