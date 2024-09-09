@@ -79,6 +79,7 @@ public class InProgressState implements GameState {
         if (HELP_COMMAND.equals(letter)) {
             hintEnabled = !hintEnabled;
             gameCycle(gameContext);
+            return;
         }
         if (EXIT_COMMAND.equals(letter)) {
             gameContext.finish();
