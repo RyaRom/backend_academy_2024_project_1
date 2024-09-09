@@ -219,8 +219,10 @@ public class GraphicUtils {
         "",
         "Difficulty: %s                 Lives remaining: %s",
         "",
-        "Write \"exit\" to leave game",
+        "Enter \"exit\" to leave game",
         "");
+
+    public static final String INPUT_NOT_RECOGNIZED = "Input wasn't recognized. Write command again: ";
 
     public static final String NO_HINT_TEXT = "Enter \"help\" for hint. Enter \"help\" again to disable";
 

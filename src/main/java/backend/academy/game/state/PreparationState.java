@@ -38,8 +38,7 @@ public class PreparationState implements GameState {
             case 1 -> nextState(gameContext);
             case 2 -> loadThemeSelector(gameContext);
             case 3 -> loadDifficultySelector(gameContext);
-            case 4 -> gameContext.finish();
-            default -> gameCycle(gameContext);
+            default -> gameContext.finish();
         }
     }
 
@@ -49,6 +48,7 @@ public class PreparationState implements GameState {
         int themeMenuChoice = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 0, THEMES.length);
         if (themeMenuChoice == 0) {
             gameCycle(gameContext);
+            return;
         }
 
         //Themes in menu are shifted by 1
@@ -62,7 +62,6 @@ public class PreparationState implements GameState {
         int difficultyMenuChoice = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 0, 3);
         GameDifficulty difficulty = GameDifficulty.EMPTY;
         switch (difficultyMenuChoice) {
-            case 0 -> gameCycle(gameContext);
             case 1 -> difficulty = GameDifficulty.EASY;
             case 2 -> difficulty = GameDifficulty.MEDIUM;
             case 3 -> difficulty = GameDifficulty.HARD;

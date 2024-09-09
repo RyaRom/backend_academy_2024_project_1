@@ -8,9 +8,9 @@ import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import static backend.academy.config.GameConfig.EXIT_COMMAND;
 import static backend.academy.config.GameConfig.HELP_COMMAND;
+import static backend.academy.utils.GraphicUtils.INPUT_NOT_RECOGNIZED;
 
 @UtilityClass
-@SuppressWarnings("MultipleStringLiterals")
 public class GameUtils {
 
     private static final SecureRandom RANDOM = new SecureRandom();
@@ -37,7 +37,7 @@ public class GameUtils {
             } else if (HELP_COMMAND.toUpperCase().equals(input) || EXIT_COMMAND.toUpperCase().equals(input)) {
                 return input.toLowerCase();
             } else {
-                outputWriter.print("Input wasn't recognized. Write command again: ");
+                outputWriter.print(INPUT_NOT_RECOGNIZED);
             }
         }
     }
@@ -60,7 +60,7 @@ public class GameUtils {
                     return command;
                 }
             }
-            outputWriter.print("Input wasn't recognized. Write command again: ");
+            outputWriter.print(INPUT_NOT_RECOGNIZED);
         }
     }
 }
