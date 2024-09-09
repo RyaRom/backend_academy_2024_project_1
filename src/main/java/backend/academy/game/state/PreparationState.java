@@ -31,11 +31,12 @@ public class PreparationState extends GameState {
         gameContext.outputWriter().print(MAIN_MENU);
 
         log.info("Menu Loaded");
-        int mainMenuChoice = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 1, 3);
+        int mainMenuChoice = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 1, 4);
         switch (mainMenuChoice) {
             case 1 -> nextState(gameContext);
             case 2 -> loadThemeSelector(gameContext);
             case 3 -> loadDifficultySelector(gameContext);
+            case 4 -> gameContext.finish();
             default -> gameCycle(gameContext);
         }
     }

@@ -4,7 +4,6 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import lombok.experimental.UtilityClass;
-import static backend.academy.config.GameConfig.*;
 
 @UtilityClass
 @SuppressWarnings("MultipleStringLiterals")
@@ -198,6 +197,7 @@ public class GraphicUtils {
         "1. Play Game",
         "2. Select Theme",
         "3. Select Difficulty",
+        "4. Exit",
         "Enter your choice: "
     );
 
