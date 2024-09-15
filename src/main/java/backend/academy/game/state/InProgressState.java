@@ -1,5 +1,6 @@
 package backend.academy.game.state;
 
+import backend.academy.data.enums.WordTheme;
 import backend.academy.game.GameContext;
 import java.util.Arrays;
 import java.util.Locale;
@@ -118,7 +119,7 @@ public class InProgressState implements GameState {
         String wordLetters = getHangmanWordString(guessedLetters);
         String wrongLettersString = String.join(", ", wrongLetters);
         String hint = hintEnabled ? gameContext.word().hint() : NO_HINT_TEXT;
-        String theme = gameContext.theme();
+        WordTheme theme = gameContext.theme();
         String difficulty = gameContext.difficulty().toString().toLowerCase(Locale.ROOT);
         String attempts = String.valueOf(STAGES - gameStage);
         String menu = WORD_MENU.formatted(wordLetters, wrongLettersString, hint, theme, difficulty, attempts);

@@ -1,5 +1,5 @@
 package backend.academy.data.enums;
 
 public enum GameDifficulty {
-    EASY, MEDIUM, HARD, EMPTY
+    EASY, MEDIUM, HARD
 }

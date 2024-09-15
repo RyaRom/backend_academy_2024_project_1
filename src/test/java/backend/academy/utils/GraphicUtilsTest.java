@@ -1,5 +1,6 @@
 package backend.academy.utils;
 
+import backend.academy.data.enums.WordTheme;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -23,7 +24,7 @@ class GraphicUtilsTest {
 
     @Test
     void getThemeMenuValidInput() {
-        String[] themes = {"Animals", "Movies", "Books"};
+        WordTheme[] themes = {WordTheme.ANIMALS, WordTheme.FOOD, WordTheme.BIOLOGY};
         String result = GraphicUtils.getThemeMenu(themes);
         String expected = String.join(System.lineSeparator(),
             "Select theme:",
@@ -38,7 +39,7 @@ class GraphicUtilsTest {
 
     @Test
     void getThemeMenuInvalidInput() {
-        String[] themes = {};
+        WordTheme[] themes = {};
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             GraphicUtils.getThemeMenu(themes);
         });

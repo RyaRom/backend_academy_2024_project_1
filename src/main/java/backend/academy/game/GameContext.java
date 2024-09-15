@@ -2,6 +2,7 @@ package backend.academy.game;
 
 import backend.academy.data.Word;
 import backend.academy.data.enums.GameDifficulty;
+import backend.academy.data.enums.WordTheme;
 import backend.academy.game.state.GameState;
 import backend.academy.game.state.PreparationState;
 import java.io.BufferedReader;
@@ -11,6 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
+import static backend.academy.config.GameConfig.THEMES;
+import static backend.academy.utils.GameUtils.pickRandomObject;
 
 @Getter
 @Setter
@@ -21,7 +24,7 @@ public class GameContext {
 
     private GameDifficulty difficulty;
 
-    private String theme;
+    private WordTheme theme;
 
     private Word word;
 
@@ -35,8 +38,8 @@ public class GameContext {
         this.outputWriter = outputWriter;
 
         state = new PreparationState();
-        difficulty = GameDifficulty.EMPTY;
-        theme = "";
+        difficulty = pickRandomObject(GameDifficulty.values());
+        theme = pickRandomObject(THEMES);
 
         state.gameCycle(this);
     }

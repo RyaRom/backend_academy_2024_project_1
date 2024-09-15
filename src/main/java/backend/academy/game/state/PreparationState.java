@@ -60,7 +60,7 @@ public class PreparationState implements GameState {
     private void loadDifficultySelector(GameContext gameContext) {
         gameContext.outputWriter().print(DIFFICULTY_MENU);
         int difficultyMenuChoice = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 0, 3);
-        GameDifficulty difficulty = GameDifficulty.EMPTY;
+        GameDifficulty difficulty;
         switch (difficultyMenuChoice) {
             case 1 -> difficulty = GameDifficulty.EASY;
             case 2 -> difficulty = GameDifficulty.MEDIUM;
@@ -75,28 +75,13 @@ public class PreparationState implements GameState {
         gameCycle(gameContext);
     }
 
-    private void randomiseEmptyOptions(GameContext gameContext) {
-        if (gameContext.theme().isEmpty()) {
-            String theme = pickRandomObject(THEMES);
-            gameContext.theme(theme);
-        }
-
-        if (gameContext.difficulty() == GameDifficulty.EMPTY) {
-            GameDifficulty difficulty =
-                pickRandomObject(GameDifficulty.EASY, GameDifficulty.MEDIUM, GameDifficulty.HARD);
-            gameContext.difficulty(difficulty);
-        }
-    }
-
     private Word selectRandomWord(GameContext gameContext) {
         GameDifficulty difficulty = gameContext.difficulty();
-        Word[] wordlist;
-        switch (difficulty) {
-            case EASY -> wordlist = EASY_WORDS;
-            case MEDIUM -> wordlist = MEDIUM_WORDS;
-            case HARD -> wordlist = HARD_WORDS;
-            default -> throw new IllegalStateException("Unexpected value: " + difficulty);
-        }
+        Word[] wordlist = switch (difficulty) {
+            case EASY -> EASY_WORDS;
+            case MEDIUM -> MEDIUM_WORDS;
+            case HARD -> HARD_WORDS;
+        };
         wordlist =
             Arrays.stream(wordlist).filter(word -> word.theme().equals(gameContext.theme())).toArray(Word[]::new);
         log.info("All words filtered by theme and difficulty: {}", Arrays.toString(wordlist));
@@ -108,7 +93,6 @@ public class PreparationState implements GameState {
         log.info("Before game configuration. Difficulty: {}. Theme: {}.", gameContext.difficulty(),
             gameContext.theme());
 
-        randomiseEmptyOptions(gameContext);
         gameContext.word(
             selectRandomWord(gameContext));
 

@@ -15,8 +15,7 @@ import static backend.academy.utils.GraphicUtils.DIFFICULTY_MENU;
 import static backend.academy.utils.GraphicUtils.HANGMAN_PREVIEW;
 import static backend.academy.utils.GraphicUtils.MAIN_MENU;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PreparationTest {
@@ -41,8 +40,8 @@ class PreparationTest {
 
         assertTrue(outputStream.toString().contains(HANGMAN_PREVIEW));
         assertTrue(outputStream.toString().contains(MAIN_MENU));
-        assertFalse(gameContext.theme().isEmpty());
-        assertNotSame(gameContext.difficulty(), GameDifficulty.EMPTY);
+        assertNotNull(gameContext.theme());
+        assertNotNull(gameContext.difficulty());
         assertEquals(gameContext.theme(), gameContext.word().theme());
         assertEquals(InProgressState.class, gameContext.state().getClass());
     }
@@ -56,7 +55,7 @@ class PreparationTest {
         assertTrue(outputStream.toString().contains(HANGMAN_PREVIEW));
         assertTrue(outputStream.toString().contains(MAIN_MENU));
         assertTrue(outputStream.toString().contains(DIFFICULTY_MENU));
-        assertFalse(gameContext.theme().isEmpty());
+        assertNotNull(gameContext.difficulty());
         assertEquals(GameDifficulty.HARD, gameContext.difficulty());
         assertTrue(Arrays.stream(HARD_WORDS).anyMatch(w -> w.equals(gameContext.word())));
         assertEquals(gameContext.theme(), gameContext.word().theme());

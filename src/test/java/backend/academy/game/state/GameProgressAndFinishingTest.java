@@ -57,7 +57,7 @@ class GameProgressAndFinishingTest {
 
         Arrays.stream(GAME_STAGES).forEach(stage ->
             assertTrue(output.contains(stage)));
-        assertTrue(output.contains(word.theme()));
+        assertTrue(output.contains(word.theme().toString()));
         assertTrue(output.contains(difficulty.toString().toLowerCase()));
         assertTrue(output.contains(NO_HINT_TEXT));
         assertTrue(output.contains(DEATH_SCREEN.formatted(word.content())));
@@ -82,7 +82,7 @@ class GameProgressAndFinishingTest {
         assertTrue(output.contains(GAME_STAGES[0]));
         assertTrue(output.contains(GAME_STAGES[1]));
         assertFalse(output.contains(GAME_STAGES[2]));
-        assertTrue(output.contains(word.theme()));
+        assertTrue(output.contains(word.theme().toString()));
         assertTrue(output.contains(difficulty.toString().toLowerCase()));
         assertTrue(output.contains(NO_HINT_TEXT));
         assertTrue(output.contains(VICTORY_SCREEN.formatted(word.content())));
