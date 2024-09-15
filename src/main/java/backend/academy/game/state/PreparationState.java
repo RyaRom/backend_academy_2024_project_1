@@ -60,6 +60,11 @@ public class PreparationState implements GameState {
     private void loadDifficultySelector(GameContext gameContext) {
         gameContext.outputWriter().print(DIFFICULTY_MENU);
         int difficultyMenuChoice = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 0, 3);
+        if (difficultyMenuChoice == 0) {
+            gameCycle(gameContext);
+            return;
+        }
+
         GameDifficulty difficulty = switch (difficultyMenuChoice) {
             case 1 -> GameDifficulty.EASY;
             case 2 -> GameDifficulty.MEDIUM;
