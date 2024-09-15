@@ -251,6 +251,7 @@ public class GraphicUtils {
             .append(System.lineSeparator())
             .append("0. Go back")
             .append(System.lineSeparator());
+
         for (int i = 0; i < themes.length; i++) {
             if (themes[i] == null) {
                 continue;

@@ -56,8 +56,6 @@ public class InProgressState implements GameState {
 
     private void finishGame(GameContext gameContext, boolean isVictory) {
         gameContext.state(new FinishedState(isVictory));
-
-        log.info("Game is finished");
         gameContext.state().gameCycle(gameContext);
     }
 
@@ -85,7 +83,7 @@ public class InProgressState implements GameState {
         if (EXIT_COMMAND.equals(letter)) {
             gameContext.finish();
         }
-        String wordText = gameContext.word().content();
+        String wordText = gameContext.word().toString();
         if (!wordText.toUpperCase(Locale.ROOT).contains(letter)) {
             incorrectLetterAction(gameContext, letter);
         } else {
@@ -95,8 +93,10 @@ public class InProgressState implements GameState {
     }
 
     private void incorrectLetterAction(GameContext gameContext, String letter) {
-        log.info("Letter {} is incorrect. Word: {}.", letter, gameContext.word().content());
-        wrongLetters.add(letter);
+        log.info("Letter {} is incorrect. Word: {}.", letter, gameContext.word());
+        if (!wrongLetters.add(letter)) {
+            return;
+        }
         switch (gameContext.difficulty()) {
             case EASY -> gameStage += EASY_MODE_STEPS;
             case MEDIUM -> gameStage += MEDIUM_MODE_STEPS;
@@ -106,7 +106,7 @@ public class InProgressState implements GameState {
     }
 
     private void correctLetterAction(GameContext gameContext, String guessedLetter) {
-        log.info("Letter {} is correct. Word: {}.", guessedLetter, gameContext.word().content());
+        log.info("Letter {} is correct. Word: {}.", guessedLetter, gameContext.word());
         char[] word = gameContext.word().content().toCharArray();
         for (int i = 0; i < word.length; i++) {
             if (("" + word[i]).toUpperCase().equals(guessedLetter)) {

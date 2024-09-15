@@ -17,7 +17,6 @@ class GraphicUtilsTest {
 
     @Test
     void getHangmanWordInvalidInput() {
-        String[] word = {};
         assertThatThrownBy(() -> GraphicUtils.getHangmanWordString(new String[] {}))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("No string from the empty array");
