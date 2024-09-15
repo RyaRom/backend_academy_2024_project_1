@@ -28,7 +28,7 @@ public class FinishedState implements GameState {
         switch (menuChose) {
             case 1 -> nextState(gameContext);
             case 2 -> gameContext.finish();
-            default -> gameCycle(gameContext);
+            default -> throw new IllegalStateException("Unexpected value: " + menuChose);
         }
     }
 

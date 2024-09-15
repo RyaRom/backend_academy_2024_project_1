@@ -60,16 +60,12 @@ public class PreparationState implements GameState {
     private void loadDifficultySelector(GameContext gameContext) {
         gameContext.outputWriter().print(DIFFICULTY_MENU);
         int difficultyMenuChoice = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 0, 3);
-        GameDifficulty difficulty;
-        switch (difficultyMenuChoice) {
-            case 1 -> difficulty = GameDifficulty.EASY;
-            case 2 -> difficulty = GameDifficulty.MEDIUM;
-            case 3 -> difficulty = GameDifficulty.HARD;
-            default -> {
-                gameCycle(gameContext);
-                return;
-            }
-        }
+        GameDifficulty difficulty = switch (difficultyMenuChoice) {
+            case 1 -> GameDifficulty.EASY;
+            case 2 -> GameDifficulty.MEDIUM;
+            case 3 -> GameDifficulty.HARD;
+            default -> throw new IllegalStateException("Unexpected value: " + difficultyMenuChoice);
+        };
         log.info("Difficulty {} chosen.", difficulty);
         gameContext.difficulty(difficulty);
         gameCycle(gameContext);
