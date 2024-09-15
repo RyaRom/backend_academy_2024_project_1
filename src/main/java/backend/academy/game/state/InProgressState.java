@@ -1,6 +1,5 @@
 package backend.academy.game.state;
 
-import backend.academy.data.enums.WordTheme;
 import backend.academy.game.GameContext;
 import java.util.Arrays;
 import java.util.Locale;
