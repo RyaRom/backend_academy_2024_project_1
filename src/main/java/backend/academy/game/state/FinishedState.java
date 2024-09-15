@@ -21,11 +21,8 @@ public class FinishedState implements GameState {
         if (Thread.currentThread().isInterrupted()) {
             return;
         }
-        if (isVictory) {
-            gameContext.outputWriter().println(VICTORY_SCREEN.formatted(gameContext.word().content()));
-        } else {
-            gameContext.outputWriter().println(DEATH_SCREEN.formatted(gameContext.word().content()));
-        }
+        var screen = isVictory ? VICTORY_SCREEN : DEATH_SCREEN;
+        gameContext.outputWriter().println(screen.formatted(gameContext.word()));
 
         int menuChose = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 1, 2);
         switch (menuChose) {
@@ -37,6 +34,11 @@ public class FinishedState implements GameState {
 
     @Override
     public void nextState(GameContext gameContext) {
-        gameContext.init(gameContext.inputReader(), gameContext.outputWriter());
+        final var input = gameContext.inputReader();
+        final var output = gameContext.outputWriter();
+        final boolean isTestMode = gameContext.testMode();
+        GameContext newGameContext = new GameContext();
+        newGameContext.testMode(isTestMode);
+        newGameContext.init(input, output);
     }
 }

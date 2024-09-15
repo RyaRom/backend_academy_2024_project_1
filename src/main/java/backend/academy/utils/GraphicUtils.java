@@ -3,7 +3,6 @@ package backend.academy.utils;
 import backend.academy.data.enums.WordTheme;
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.stream.Collectors;
 import lombok.experimental.UtilityClass;
 
@@ -247,9 +246,11 @@ public class GraphicUtils {
         if (themes.length < 1) {
             throw new IllegalArgumentException("No string from the empty array");
         }
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Select theme:").append(System.lineSeparator());
-        stringBuilder.append("0. Go back").append(System.lineSeparator());
+        StringBuilder stringBuilder = new StringBuilder()
+            .append("Select theme:")
+            .append(System.lineSeparator())
+            .append("0. Go back")
+            .append(System.lineSeparator());
         for (int i = 0; i < themes.length; i++) {
             if (themes[i] == null) {
                 continue;

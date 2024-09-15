@@ -20,11 +20,13 @@ import static backend.academy.utils.GameUtils.pickRandomObject;
 @NoArgsConstructor
 @Log4j2
 public class GameContext {
-    private GameState state;
+    private boolean testMode = false;
 
-    private GameDifficulty difficulty;
+    private GameState state = new PreparationState();
 
-    private WordTheme theme;
+    private GameDifficulty difficulty = pickRandomObject(GameDifficulty.values());
+
+    private WordTheme theme = pickRandomObject(THEMES);
 
     private Word word;
 
@@ -33,14 +35,8 @@ public class GameContext {
     private PrintStream outputWriter;
 
     public void init(BufferedReader inputReader, PrintStream outputWriter) {
-
         this.inputReader = inputReader;
         this.outputWriter = outputWriter;
-
-        state = new PreparationState();
-        difficulty = pickRandomObject(GameDifficulty.values());
-        theme = pickRandomObject(THEMES);
-
         state.gameCycle(this);
     }
 
@@ -51,6 +47,11 @@ public class GameContext {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Thread.currentThread().interrupt();
+
+        if (testMode) {
+            Thread.currentThread().interrupt();
+        } else {
+            System.exit(0);
+        }
     }
 }

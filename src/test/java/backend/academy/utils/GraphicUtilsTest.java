@@ -2,6 +2,7 @@ package backend.academy.utils;
 
 import backend.academy.data.enums.WordTheme;
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -17,9 +18,9 @@ class GraphicUtilsTest {
     @Test
     void getHangmanWordInvalidInput() {
         String[] word = {};
-        Exception exception =
-            assertThrows(IllegalArgumentException.class, () -> GraphicUtils.getHangmanWordString(word));
-        assertEquals("No string from the empty array", exception.getMessage());
+        assertThatThrownBy(() -> GraphicUtils.getHangmanWordString(new String[] {}))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("No string from the empty array");
     }
 
     @Test
@@ -29,9 +30,9 @@ class GraphicUtilsTest {
         String expected = String.join(System.lineSeparator(),
             "Select theme:",
             "0. Go back",
-            "1. Animals",
-            "2. Movies",
-            "3. Books",
+            "1. ANIMALS",
+            "2. FOOD",
+            "3. BIOLOGY",
             "Enter your choice: "
         );
         assertEquals(expected, result);
@@ -44,5 +45,10 @@ class GraphicUtilsTest {
             GraphicUtils.getThemeMenu(themes);
         });
         assertEquals("No string from the empty array", exception.getMessage());
+    }
+
+    @Test
+    void clearScreen() {
+        GraphicUtils.clearScreen(System.out);
     }
 }

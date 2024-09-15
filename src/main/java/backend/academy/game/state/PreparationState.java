@@ -96,10 +96,10 @@ public class PreparationState implements GameState {
         gameContext.word(
             selectRandomWord(gameContext));
 
-        log.info("game configured. Difficulty: {}. Theme: {}. Word: {}", gameContext.difficulty(), gameContext.theme(),
+        log.info("Game configured. Difficulty: {}. Theme: {}. Word: {}", gameContext.difficulty(), gameContext.theme(),
             gameContext.word());
 
-        String[] emptyWordArray = new String[gameContext.word().content().length()];
+        String[] emptyWordArray = new String[gameContext.word().length()];
         Arrays.fill(emptyWordArray, "");
         gameContext.state(
             new InProgressState(0, false, emptyWordArray, new HashSet<>()));

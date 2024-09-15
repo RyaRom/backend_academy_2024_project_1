@@ -12,6 +12,7 @@ import java.util.HashSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static backend.academy.config.GameConfig.EASY_WORDS;
+import static backend.academy.config.GameConfig.THEMES;
 import static backend.academy.utils.GraphicUtils.DEATH_SCREEN;
 import static backend.academy.utils.GraphicUtils.GAME_STAGES;
 import static backend.academy.utils.GraphicUtils.NO_HINT_TEXT;
@@ -37,6 +38,7 @@ class GameProgressAndFinishingTest {
         PrintStream writer = new PrintStream(outputStream);
 
         gameContext = new GameContext();
+        gameContext.testMode(true);
         gameContext.word(word);
         gameContext.outputWriter(writer);
         gameContext.difficulty(difficulty);
@@ -109,18 +111,18 @@ class GameProgressAndFinishingTest {
     @Test
     void sameLetterIncorrect() {
         gameContext.difficulty(GameDifficulty.HARD);
-        BufferedReader gameInput = new BufferedReader(new StringReader("w\nw\nw\nw\nw\nw\nw\nw\nw\nw\n2"));
+        BufferedReader gameInput = new BufferedReader(new StringReader("w\nw\nw\nw\nw\nw\nw\nw\nw\nw\n2\nexit"));
         gameContext.inputReader(gameInput);
 
         gameContext.state().gameCycle(gameContext);
         String output = outputStream.toString();
 
-        assertFalse(output.contains(GAME_STAGES[1]));
         assertTrue(output.contains(GAME_STAGES[0]));
+        assertFalse(output.contains(GAME_STAGES[1]));
         assertTrue(output.contains(GAME_STAGES[3]));
-        assertTrue(output.contains(GAME_STAGES[6]));
-        assertTrue(output.contains(GAME_STAGES[9]));
-        assertTrue(output.contains(GAME_STAGES[12]));
+        assertFalse(output.contains(GAME_STAGES[6]));
+        assertFalse(output.contains(GAME_STAGES[9]));
+        assertFalse(output.contains(GAME_STAGES[12]));
         assertTrue(output.contains(getHangmanWordString(new String[] {"", "", ""})));
         assertTrue(output.contains("Wrong letters: W"));
     }
@@ -140,11 +142,11 @@ class GameProgressAndFinishingTest {
 
     @Test
     void restartAfterFinish() {
-        BufferedReader gameInput = new BufferedReader(new StringReader("s\nu\nn\n1\n4"));
+        BufferedReader gameInput = new BufferedReader(new StringReader("s\nu\nn\n1\n2\n2\n4"));
         gameContext.inputReader(gameInput);
 
         gameContext.state().gameCycle(gameContext);
 
-        assertEquals(PreparationState.class, gameContext.state().getClass());
+        assertEquals(gameContext.theme(), THEMES[0]);
     }
 }

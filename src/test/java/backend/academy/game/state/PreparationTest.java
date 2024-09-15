@@ -30,6 +30,7 @@ class PreparationTest {
         outputStream = new ByteArrayOutputStream();
         writer = new PrintStream(outputStream);
         gameContext = new GameContext();
+        gameContext.testMode(true);
     }
 
     @Test
