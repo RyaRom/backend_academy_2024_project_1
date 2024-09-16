@@ -1,10 +1,12 @@
 package backend.academy.utils;
 
 import backend.academy.data.enums.WordTheme;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class GraphicUtilsTest {
 
@@ -39,15 +41,17 @@ class GraphicUtilsTest {
 
     @Test
     void getThemeMenuInvalidInput() {
-        WordTheme[] themes = {};
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            GraphicUtils.getThemeMenu(themes);
-        });
-        assertEquals("No string from the empty array", exception.getMessage());
+        assertThatThrownBy(() -> GraphicUtils.getThemeMenu(new WordTheme[] {}))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("No string from the empty array");
     }
 
     @Test
     void clearScreen() {
-        GraphicUtils.clearScreen(System.out);
+        var out = new ByteArrayOutputStream();
+        var printStream = new PrintStream(out);
+        assertThatNoException().isThrownBy(() -> GraphicUtils.clearScreen(printStream));
+        assertEquals(System.lineSeparator().repeat(50) +
+            "\033[H\033[2J", out.toString());
     }
 }
