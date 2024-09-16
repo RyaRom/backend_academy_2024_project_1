@@ -2,6 +2,7 @@ package backend.academy.utils;
 
 import backend.academy.data.enums.WordTheme;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
@@ -47,11 +48,13 @@ class GraphicUtilsTest {
     }
 
     @Test
-    void clearScreen() {
-        var out = new ByteArrayOutputStream();
-        var printStream = new PrintStream(out);
-        assertThatNoException().isThrownBy(() -> GraphicUtils.clearScreen(printStream));
-        assertEquals(System.lineSeparator().repeat(50) +
-            "\033[H\033[2J", out.toString());
+    void clearScreen() throws IOException {
+        try (
+            var out = new ByteArrayOutputStream();
+            var printStream = new PrintStream(out)) {
+            assertThatNoException().isThrownBy(() -> GraphicUtils.clearScreen(printStream));
+            assertEquals(System.lineSeparator().repeat(50) +
+                "\033[H\033[2J", out.toString());
+        }
     }
 }

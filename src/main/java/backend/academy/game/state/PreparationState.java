@@ -106,7 +106,7 @@ public class PreparationState implements GameState {
             return;
         }
 
-        String chosenPath = CUSTOM_WORD_FILE_LOCATION + "/" + customWords[customWordsMenuChoice - 1];
+        String chosenPath = CUSTOM_WORD_FILE_LOCATION + customWords[customWordsMenuChoice - 1];
         addWordsFromJson(chosenPath);
 
         log.info("Custom words path {} chosen.", chosenPath);

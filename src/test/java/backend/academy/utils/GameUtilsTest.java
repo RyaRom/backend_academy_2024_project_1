@@ -4,9 +4,11 @@ import backend.academy.config.GameConfig;
 import backend.academy.data.Word;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.io.StringReader;
 import java.util.Set;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import static backend.academy.config.GameConfig.EXIT_COMMAND;
 import static backend.academy.config.GameConfig.HELP_COMMAND;
@@ -90,5 +92,11 @@ class GameUtilsTest {
             .hasMessage("No random element in the empty array");
         assertEquals("", GameUtils.pickRandomObject(oneElement));
         assertTrue(words.contains(word));
+    }
+
+    @AfterEach
+    void tearDown() throws IOException {
+        outputStream.close();
+        outputWriter.close();
     }
 }

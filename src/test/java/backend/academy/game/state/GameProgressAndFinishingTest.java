@@ -6,11 +6,13 @@ import backend.academy.data.enums.WordTheme;
 import backend.academy.game.GameContext;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.io.StringReader;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Locale;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static backend.academy.config.GameConfig.THEMES;
@@ -33,10 +35,14 @@ class GameProgressAndFinishingTest {
 
     private GameContext gameContext;
 
+    private BufferedReader gameInput;
+
+    private PrintStream writer;
+
     @BeforeEach
     void setUp() {
         outputStream = new ByteArrayOutputStream();
-        PrintStream writer = new PrintStream(outputStream);
+        writer = new PrintStream(outputStream);
 
         gameContext = new GameContext();
         gameContext.word(word);
@@ -50,7 +56,7 @@ class GameProgressAndFinishingTest {
 
     @Test
     void looseGame() {
-        BufferedReader gameInput =
+        gameInput =
             new BufferedReader(new StringReader("q\ns\ne\nr\nn\ny\n.\n>>\ni\no\np\nl\nk\nj\nh\nq\ny\ng\nd\nm\nl\n2"));
         gameContext.inputReader(gameInput);
 
@@ -78,7 +84,7 @@ class GameProgressAndFinishingTest {
 
     @Test
     void winGame() {
-        BufferedReader gameInput =
+        gameInput =
             new BufferedReader(new StringReader("w\ns\nu\nn\n2"));
         gameContext.inputReader(gameInput);
 
@@ -106,7 +112,7 @@ class GameProgressAndFinishingTest {
 
     @Test
     void sameLetterCorrect() {
-        BufferedReader gameInput = new BufferedReader(new StringReader("s\ns\ns\ns\ns\ns\nexit"));
+        gameInput = new BufferedReader(new StringReader("s\ns\ns\ns\ns\ns\nexit"));
         gameContext.inputReader(gameInput);
 
         gameContext.state().gameCycle(gameContext);
@@ -119,7 +125,7 @@ class GameProgressAndFinishingTest {
     @Test
     void sameLetterIncorrect() {
         gameContext.difficulty(GameDifficulty.HARD);
-        BufferedReader gameInput = new BufferedReader(new StringReader("w\nw\nw\nw\nw\nw\nw\nw\nw\nw\n2\nexit"));
+        gameInput = new BufferedReader(new StringReader("w\nw\nw\nw\nw\nw\nw\nw\nw\nw\n2\nexit"));
         gameContext.inputReader(gameInput);
 
         gameContext.state().gameCycle(gameContext);
@@ -137,7 +143,7 @@ class GameProgressAndFinishingTest {
 
     @Test
     void hint() {
-        BufferedReader gameInput = new BufferedReader(new StringReader("Help\nexit"));
+        gameInput = new BufferedReader(new StringReader("Help\nexit"));
         gameContext.inputReader(gameInput);
 
         gameContext.state().gameCycle(gameContext);
@@ -150,11 +156,18 @@ class GameProgressAndFinishingTest {
 
     @Test
     void restartAfterFinish() {
-        BufferedReader gameInput = new BufferedReader(new StringReader("s\nu\nn\n1\n2\n2\n4"));
+        gameInput = new BufferedReader(new StringReader("s\nu\nn\n1\n2\n2\n4"));
         gameContext.inputReader(gameInput);
 
         gameContext.state().gameCycle(gameContext);
 
         assertEquals(gameContext.theme(), THEMES[0]);
+    }
+
+    @AfterEach
+    void tearDown() throws IOException {
+        outputStream.close();
+        gameInput.close();
+        writer.close();
     }
 }
