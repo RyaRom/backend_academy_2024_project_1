@@ -63,7 +63,7 @@ public class FileParser {
         return src.list((f, name) -> name.toLowerCase().endsWith(".json"));
     }
 
-    private record WordConfig(
+    public record WordConfig(
         List<Word> easyWords,
         List<Word> mediumWords,
         List<Word> hardWords) {
