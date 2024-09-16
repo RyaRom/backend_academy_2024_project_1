@@ -13,7 +13,7 @@ import static backend.academy.utils.FileParser.getMediumWords;
 public class GameConfig {
     public static final String WORD_FILE_LOCATION = "src/main/resources/words.json";
 
-    public static final String CUSTOM_WORD_FILE_LOCATION = "src/main/resources/customWords";
+    public static final String CUSTOM_WORD_FILE_LOCATION = "src/main/resources/customWords/";
 
     public static final String HELP_COMMAND = "help";
 

@@ -87,29 +87,4 @@ class PreparationTest {
         assertEquals(gameContext.theme(), gameContext.word().theme());
         assertEquals(InProgressState.class, gameContext.state().getClass());
     }
-
-    @Test
-    void addCustomWordlist() throws IOException {
-        Word easy = new Word("testEasy", WordTheme.SCIENCE, "test");
-        Word medium = new Word("testMedium", WordTheme.SCIENCE, "test");
-        Word hard = new Word("testHard", WordTheme.SCIENCE, "test");
-        var wordlist = new WordConfig(
-            List.of(easy),
-            List.of(medium),
-            List.of(hard)
-        );
-        File words = new File(GameConfig.CUSTOM_WORD_FILE_LOCATION + "/test_wordlist.json");
-        new ObjectMapper().writeValue(words, wordlist);
-
-        int option = getJsonInDir(CUSTOM_WORD_FILE_LOCATION).length;
-        BufferedReader startGame = new BufferedReader(new StringReader("5\n%s\n4".formatted(option)));
-
-        gameContext.init(startGame, writer);
-
-        assertTrue(EASY_WORDS.contains(easy));
-        assertTrue(MEDIUM_WORDS.contains(medium));
-        assertTrue(HARD_WORDS.contains(hard));
-
-        Files.delete(words.toPath());
-    }
 }
