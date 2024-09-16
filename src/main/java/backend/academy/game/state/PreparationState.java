@@ -7,21 +7,25 @@ import java.util.Arrays;
 import java.util.HashSet;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import static backend.academy.config.GameConfig.CUSTOM_WORD_FILE_LOCATION;
 import static backend.academy.config.GameConfig.EASY_WORDS;
 import static backend.academy.config.GameConfig.HARD_WORDS;
 import static backend.academy.config.GameConfig.MEDIUM_WORDS;
 import static backend.academy.config.GameConfig.THEMES;
+import static backend.academy.utils.FileParser.addWordsFromJson;
+import static backend.academy.utils.FileParser.getJsonInDir;
 import static backend.academy.utils.GameUtils.pickRandomObject;
 import static backend.academy.utils.GameUtils.readCommand;
 import static backend.academy.utils.GraphicUtils.DIFFICULTY_MENU;
 import static backend.academy.utils.GraphicUtils.HANGMAN_PREVIEW;
 import static backend.academy.utils.GraphicUtils.MAIN_MENU;
 import static backend.academy.utils.GraphicUtils.clearScreen;
+import static backend.academy.utils.GraphicUtils.getCustomWordsMenu;
 import static backend.academy.utils.GraphicUtils.getThemeMenu;
 
 @Log4j2
 @NoArgsConstructor
-@SuppressWarnings("MagicNumber")
+@SuppressWarnings({"MagicNumber", "MultipleStringLiterals"})
 public class PreparationState implements GameState {
     @Override
     public void gameCycle(GameContext gameContext) {
@@ -33,12 +37,14 @@ public class PreparationState implements GameState {
         gameContext.outputWriter().print(MAIN_MENU);
 
         log.info("Menu Loaded");
-        int mainMenuChoice = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 1, 4);
+        int mainMenuChoice = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 1, 5);
         switch (mainMenuChoice) {
             case 1 -> nextState(gameContext);
             case 2 -> loadThemeSelector(gameContext);
             case 3 -> loadDifficultySelector(gameContext);
-            default -> gameContext.finish();
+            case 4 -> gameContext.finish();
+            case 5 -> loadCustomWordsSelector(gameContext);
+            default -> throw new IllegalStateException("Unexpected value: " + mainMenuChoice);
         }
     }
 
@@ -59,7 +65,11 @@ public class PreparationState implements GameState {
 
     private void loadDifficultySelector(GameContext gameContext) {
         gameContext.outputWriter().print(DIFFICULTY_MENU);
-        int difficultyMenuChoice = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 0, 3);
+        int difficultyMenuChoice = readCommand(
+            gameContext.inputReader(),
+            gameContext.outputWriter(),
+            0, 3);
+
         if (difficultyMenuChoice == 0) {
             gameCycle(gameContext);
             return;
@@ -73,6 +83,26 @@ public class PreparationState implements GameState {
         };
         log.info("Difficulty {} chosen.", difficulty);
         gameContext.difficulty(difficulty);
+        gameCycle(gameContext);
+    }
+
+    private void loadCustomWordsSelector(GameContext gameContext) {
+        String[] customWords = getJsonInDir(CUSTOM_WORD_FILE_LOCATION);
+        gameContext.outputWriter().println(getCustomWordsMenu(customWords));
+
+        int customWordsMenuChoice = readCommand(
+            gameContext.inputReader(),
+            gameContext.outputWriter(),
+            0, customWords.length);
+        if (customWordsMenuChoice == 0) {
+            gameCycle(gameContext);
+            return;
+        }
+
+        String chosenPath = CUSTOM_WORD_FILE_LOCATION + "/" + customWords[customWordsMenuChoice - 1];
+        addWordsFromJson(chosenPath);
+
+        log.info("Custom words path {} chosen.", chosenPath);
         gameCycle(gameContext);
     }
 

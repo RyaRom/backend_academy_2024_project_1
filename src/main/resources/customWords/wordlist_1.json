@@ -1,0 +1,23 @@
+{
+    "easyWords": [
+        {
+            "content": "Queen",
+            "theme": "HISTORY",
+            "hint": "The star at the center of our solar system."
+        }
+    ],
+    "mediumWords": [
+        {
+            "content": "Revolution",
+            "theme": "HISTORY",
+            "hint": "A significant change or overthrow in government."
+        }
+    ],
+    "hardWords": [
+        {
+            "content": "Inquisition",
+            "theme": "SCIENCE",
+            "hint": "A historical institution in Spain and elsewhere tasked with rooting out heresy."
+        }
+    ]
+}

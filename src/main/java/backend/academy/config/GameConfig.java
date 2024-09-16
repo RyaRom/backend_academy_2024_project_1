@@ -2,8 +2,8 @@ package backend.academy.config;
 
 import backend.academy.data.Word;
 import backend.academy.data.enums.WordTheme;
-import lombok.experimental.UtilityClass;
 import java.util.List;
+import lombok.experimental.UtilityClass;
 import static backend.academy.utils.FileParser.getEasyWords;
 import static backend.academy.utils.FileParser.getHardWords;
 import static backend.academy.utils.FileParser.getMediumWords;
@@ -12,6 +12,8 @@ import static backend.academy.utils.FileParser.getMediumWords;
 @SuppressWarnings("MultipleStringLiterals")
 public class GameConfig {
     public static final String WORD_FILE_LOCATION = "src/main/resources/words.json";
+
+    public static final String CUSTOM_WORD_FILE_LOCATION = "src/main/resources/customWords";
 
     public static final String HELP_COMMAND = "help";
 

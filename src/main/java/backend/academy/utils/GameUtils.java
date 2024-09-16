@@ -12,6 +12,7 @@ import static backend.academy.config.GameConfig.HELP_COMMAND;
 import static backend.academy.utils.GraphicUtils.INPUT_NOT_RECOGNIZED;
 
 @UtilityClass
+@SuppressWarnings("MultipleStringLiterals")
 public class GameUtils {
 
     private static final SecureRandom RANDOM = new SecureRandom();

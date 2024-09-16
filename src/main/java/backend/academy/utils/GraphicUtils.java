@@ -5,6 +5,7 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import lombok.experimental.UtilityClass;
+import static backend.academy.config.GameConfig.CUSTOM_WORD_FILE_LOCATION;
 
 @UtilityClass
 @SuppressWarnings("MultipleStringLiterals")
@@ -199,6 +200,7 @@ public class GraphicUtils {
         "2. Select Theme",
         "3. Select Difficulty",
         "4. Exit",
+        "5. Add custom words",
         "Enter your choice: "
     );
 
@@ -259,6 +261,23 @@ public class GraphicUtils {
             stringBuilder.append(i + 1)
                 .append(". ")
                 .append(themes[i])
+                .append(System.lineSeparator());
+        }
+        stringBuilder.append("Enter your choice: ");
+        return stringBuilder.toString();
+    }
+
+    public static String getCustomWordsMenu(String[] files) {
+        StringBuilder stringBuilder = new StringBuilder()
+            .append("Select custom wordlist (path: %s):".formatted(CUSTOM_WORD_FILE_LOCATION))
+            .append(System.lineSeparator())
+            .append("0. Go back")
+            .append(System.lineSeparator());
+
+        for (int i = 0; i < files.length; i++) {
+            stringBuilder.append(i + 1)
+                .append(". ")
+                .append(files[i])
                 .append(System.lineSeparator());
         }
         stringBuilder.append("Enter your choice: ");
