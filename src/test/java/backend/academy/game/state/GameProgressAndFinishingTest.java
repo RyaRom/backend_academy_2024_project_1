@@ -2,6 +2,7 @@ package backend.academy.game.state;
 
 import backend.academy.data.Word;
 import backend.academy.data.enums.GameDifficulty;
+import backend.academy.data.enums.WordTheme;
 import backend.academy.game.GameContext;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -12,7 +13,6 @@ import java.util.HashSet;
 import java.util.Locale;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static backend.academy.config.GameConfig.EASY_WORDS;
 import static backend.academy.config.GameConfig.THEMES;
 import static backend.academy.utils.GraphicUtils.DEATH_SCREEN;
 import static backend.academy.utils.GraphicUtils.GAME_STAGES;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameProgressAndFinishingTest {
 
-    private final Word word = EASY_WORDS.getFirst();
+    private final Word word = new Word("Sun", WordTheme.SCIENCE, "The star at the center of our solar system.");
 
     private final GameDifficulty difficulty = GameDifficulty.EASY;
 

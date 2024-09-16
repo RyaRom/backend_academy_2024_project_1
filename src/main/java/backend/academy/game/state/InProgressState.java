@@ -121,7 +121,8 @@ public class InProgressState implements GameState {
         String theme = gameContext.theme().toString().toLowerCase(Locale.ROOT);
         String difficulty = gameContext.difficulty().toString().toLowerCase(Locale.ROOT);
         String attempts = String.valueOf(STAGES - gameStage);
-        String menu = WORD_MENU.formatted(wordLetters, wrongLettersString, hint, theme, difficulty, attempts);
+        String menu = WORD_MENU.formatted(
+            wordLetters, wrongLettersString, hint, theme, difficulty, attempts);
         gameContext.outputWriter().println(menu);
     }
 }

@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.StringReader;
-import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 import static backend.academy.config.GameConfig.EXIT_COMMAND;
 import static backend.academy.config.GameConfig.HELP_COMMAND;
@@ -82,7 +82,7 @@ class GameUtilsTest {
     @Test
     void pickRandomObjectTest() {
         String[] oneElement = {""};
-        List<Word> words = GameConfig.EASY_WORDS;
+        Set<Word> words = GameConfig.EASY_WORDS;
         Word word = GameUtils.pickRandomObject(words);
 
         assertThatThrownBy(() -> GameUtils.pickRandomObject(new String[0]))

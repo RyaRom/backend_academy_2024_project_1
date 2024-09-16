@@ -24,7 +24,10 @@ public class FinishedState implements GameState {
         var screen = isVictory ? VICTORY_SCREEN : DEATH_SCREEN;
         gameContext.outputWriter().println(screen.formatted(gameContext.word()));
 
-        int menuChose = readCommand(gameContext.inputReader(), gameContext.outputWriter(), 1, 2);
+        int menuChose = readCommand(
+            gameContext.inputReader(),
+            gameContext.outputWriter(),
+            1, 2);
         switch (menuChose) {
             case 1 -> nextState(gameContext);
             case 2 -> gameContext.finish();

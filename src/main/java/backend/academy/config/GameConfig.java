@@ -2,7 +2,7 @@ package backend.academy.config;
 
 import backend.academy.data.Word;
 import backend.academy.data.enums.WordTheme;
-import java.util.List;
+import java.util.Set;
 import lombok.experimental.UtilityClass;
 import static backend.academy.utils.FileParser.getEasyWords;
 import static backend.academy.utils.FileParser.getHardWords;
@@ -29,9 +29,9 @@ public class GameConfig {
 
     public static final Integer HARD_MODE_STEPS = 3;
 
-    public static final List<Word> EASY_WORDS = getEasyWords();
+    public static final Set<Word> EASY_WORDS = getEasyWords();
 
-    public static final List<Word> MEDIUM_WORDS = getMediumWords();
+    public static final Set<Word> MEDIUM_WORDS = getMediumWords();
 
-    public static final List<Word> HARD_WORDS = getHardWords();
+    public static final Set<Word> HARD_WORDS = getHardWords();
 }

@@ -5,6 +5,7 @@ import java.io.PrintStream;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import static backend.academy.config.GameConfig.EXIT_COMMAND;
@@ -34,6 +35,10 @@ public class GameUtils {
 
         int index = RANDOM.nextInt(objects.size());
         return objects.get(index);
+    }
+
+    public static <T> T pickRandomObject(Set<T> objects) {
+        return pickRandomObject(objects.stream().toList());
     }
 
     @SneakyThrows public static String readLetter(BufferedReader inputReader, PrintStream outputWriter) {

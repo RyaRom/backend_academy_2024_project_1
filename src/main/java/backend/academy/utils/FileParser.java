@@ -4,7 +4,9 @@ import backend.academy.data.Word;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 import static backend.academy.config.GameConfig.EASY_WORDS;
@@ -24,6 +26,9 @@ public class FileParser {
     public static void addWordsFromJson(String path) {
         File json = new File(path);
         WordConfig config = parseJson(json, WordConfig.class);
+
+        log.info("Adding words from JSON file: {}", config);
+
         EASY_WORDS.addAll(config.easyWords);
         MEDIUM_WORDS.addAll(config.mediumWords);
         HARD_WORDS.addAll(config.hardWords);
@@ -38,16 +43,16 @@ public class FileParser {
         }
     }
 
-    public static List<Word> getEasyWords() {
-        return WORD_CONFIG.easyWords;
+    public static Set<Word> getEasyWords() {
+        return new HashSet<>(WORD_CONFIG.easyWords);
     }
 
-    public static List<Word> getMediumWords() {
-        return WORD_CONFIG.mediumWords;
+    public static Set<Word> getMediumWords() {
+        return new HashSet<>(WORD_CONFIG.mediumWords);
     }
 
-    public static List<Word> getHardWords() {
-        return WORD_CONFIG.hardWords;
+    public static Set<Word> getHardWords() {
+        return new HashSet<>(WORD_CONFIG.hardWords);
     }
 
     public static String[] getJsonInDir(String srcPath) {
