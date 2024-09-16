@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import static backend.academy.config.GameConfig.EXIT_COMMAND;
 import static backend.academy.config.GameConfig.HELP_COMMAND;
 import static backend.academy.utils.GraphicUtils.INPUT_NOT_RECOGNIZED;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameUtilsTest {
@@ -81,12 +81,13 @@ class GameUtilsTest {
 
     @Test
     void pickRandomObjectTest() {
-        String[] empty = new String[0];
         String[] oneElement = {""};
         Word[] words = GameConfig.EASY_WORDS;
         Word word = GameUtils.pickRandomObject(words);
 
-        assertThrows(IllegalArgumentException.class, () -> GameUtils.pickRandomObject(empty));
+        assertThatThrownBy(() -> GameUtils.pickRandomObject(new String[0]))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("No random element in the empty array");
         assertEquals("", GameUtils.pickRandomObject(oneElement));
         assertTrue(Arrays.asList(words).contains(word));
     }
