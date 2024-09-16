@@ -1,5 +1,5 @@
 {
-    "EASY_WORDS": [
+    "easyWords": [
         {
             "content": "Sun",
             "theme": "SCIENCE",
@@ -111,7 +111,7 @@
             "hint": "Ancient leader of the country."
         }
     ],
-    "MEDIUM_WORDS": [
+    "mediumWords": [
         {
             "content": "Gravity",
             "theme": "SCIENCE",
@@ -223,7 +223,7 @@
             "hint": "A Scandinavian explorer and raider."
         }
     ],
-    "HARD_WORDS": [
+    "hardWords": [
         {
             "content": "Relativity",
             "theme": "SCIENCE",
