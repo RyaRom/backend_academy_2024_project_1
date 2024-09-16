@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameProgressAndFinishingTest {
 
-    private final Word word = EASY_WORDS[0];
+    private final Word word = EASY_WORDS.getFirst();
 
     private final GameDifficulty difficulty = GameDifficulty.EASY;
 

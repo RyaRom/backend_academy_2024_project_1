@@ -3,6 +3,7 @@ package backend.academy.utils;
 import java.io.BufferedReader;
 import java.io.PrintStream;
 import java.security.SecureRandom;
+import java.util.List;
 import java.util.Locale;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -23,6 +24,15 @@ public class GameUtils {
 
         int index = RANDOM.nextInt(objects.length);
         return objects[index];
+    }
+
+    public static <T> T pickRandomObject(List<T> objects) {
+        if (objects.isEmpty()) {
+            throw new IllegalArgumentException("No random element in the empty array");
+        }
+
+        int index = RANDOM.nextInt(objects.size());
+        return objects.get(index);
     }
 
     @SneakyThrows public static String readLetter(BufferedReader inputReader, PrintStream outputWriter) {

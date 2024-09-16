@@ -78,14 +78,14 @@ public class PreparationState implements GameState {
 
     private Word selectRandomWord(GameContext gameContext) {
         GameDifficulty difficulty = gameContext.difficulty();
-        Word[] wordlist = switch (difficulty) {
+        var wordlist = switch (difficulty) {
             case EASY -> EASY_WORDS;
             case MEDIUM -> MEDIUM_WORDS;
             case HARD -> HARD_WORDS;
         };
         wordlist =
-            Arrays.stream(wordlist).filter(word -> word.theme().equals(gameContext.theme())).toArray(Word[]::new);
-        log.info("All words filtered by theme and difficulty: {}", Arrays.toString(wordlist));
+            wordlist.stream().filter(word -> word.theme().equals(gameContext.theme())).toList();
+        log.info("All words filtered by theme and difficulty: {}", wordlist);
         return pickRandomObject(wordlist);
     }
 

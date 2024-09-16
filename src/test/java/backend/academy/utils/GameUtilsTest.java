@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.StringReader;
 import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import static backend.academy.config.GameConfig.EXIT_COMMAND;
 import static backend.academy.config.GameConfig.HELP_COMMAND;
@@ -82,13 +83,13 @@ class GameUtilsTest {
     @Test
     void pickRandomObjectTest() {
         String[] oneElement = {""};
-        Word[] words = GameConfig.EASY_WORDS;
+        List<Word> words = GameConfig.EASY_WORDS;
         Word word = GameUtils.pickRandomObject(words);
 
         assertThatThrownBy(() -> GameUtils.pickRandomObject(new String[0]))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("No random element in the empty array");
         assertEquals("", GameUtils.pickRandomObject(oneElement));
-        assertTrue(Arrays.asList(words).contains(word));
+        assertTrue(words.contains(word));
     }
 }

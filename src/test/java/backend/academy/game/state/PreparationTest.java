@@ -57,7 +57,7 @@ class PreparationTest {
         assertTrue(outputStream.toString().contains(DIFFICULTY_MENU));
         assertNotNull(gameContext.difficulty());
         assertEquals(GameDifficulty.HARD, gameContext.difficulty());
-        assertTrue(Arrays.stream(HARD_WORDS).anyMatch(w -> w.equals(gameContext.word())));
+        assertTrue(HARD_WORDS.stream().anyMatch(w -> w.equals(gameContext.word())));
         assertEquals(gameContext.theme(), gameContext.word().theme());
         assertEquals(InProgressState.class, gameContext.state().getClass());
     }

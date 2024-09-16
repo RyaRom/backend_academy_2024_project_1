@@ -26,16 +26,16 @@ public class FileParser {
         }
     }
 
-    public static Word[] getEasyWords() {
-        return WORD_CONFIG.easyWords.toArray(new Word[0]);
+    public static List<Word> getEasyWords() {
+        return WORD_CONFIG.easyWords;
     }
 
-    public static Word[] getMediumWords() {
-        return WORD_CONFIG.mediumWords.toArray(new Word[0]);
+    public static List<Word> getMediumWords() {
+        return WORD_CONFIG.mediumWords;
     }
 
-    public static Word[] getHardWords() {
-        return WORD_CONFIG.hardWords.toArray(new Word[0]);
+    public static List<Word> getHardWords() {
+        return WORD_CONFIG.hardWords;
     }
 
     private record WordConfig(
