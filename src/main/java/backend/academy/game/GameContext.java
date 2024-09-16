@@ -20,7 +20,7 @@ import static backend.academy.utils.GameUtils.pickRandomObject;
 @NoArgsConstructor
 @Log4j2
 public class GameContext {
-    private boolean testMode = false;
+    private boolean terminate = false;
 
     private GameState state = new PreparationState();
 
@@ -47,11 +47,6 @@ public class GameContext {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        if (testMode) {
-            Thread.currentThread().interrupt();
-        } else {
-            System.exit(0);
-        }
+        terminate = true;
     }
 }

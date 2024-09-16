@@ -38,7 +38,7 @@ public class InProgressState implements GameState {
 
     @Override
     public void gameCycle(GameContext gameContext) {
-        if (Thread.currentThread().isInterrupted() || inProgressValidation(gameContext)) {
+        if (gameContext.terminate() || inProgressValidation(gameContext)) {
             return;
         }
 

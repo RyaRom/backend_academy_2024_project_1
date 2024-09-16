@@ -25,7 +25,7 @@ import static backend.academy.utils.GraphicUtils.getThemeMenu;
 public class PreparationState implements GameState {
     @Override
     public void gameCycle(GameContext gameContext) {
-        if (Thread.currentThread().isInterrupted()) {
+        if (gameContext.terminate()) {
             return;
         }
         clearScreen(gameContext.outputWriter());

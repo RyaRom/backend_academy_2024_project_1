@@ -18,7 +18,7 @@ public class FinishedState implements GameState {
     @Override
     public void gameCycle(GameContext gameContext) {
         clearScreen(gameContext.outputWriter());
-        if (Thread.currentThread().isInterrupted()) {
+        if (gameContext.terminate()) {
             return;
         }
         var screen = isVictory ? VICTORY_SCREEN : DEATH_SCREEN;
@@ -36,9 +36,7 @@ public class FinishedState implements GameState {
     public void nextState(GameContext gameContext) {
         final var input = gameContext.inputReader();
         final var output = gameContext.outputWriter();
-        final boolean isTestMode = gameContext.testMode();
         GameContext newGameContext = new GameContext();
-        newGameContext.testMode(isTestMode);
         newGameContext.init(input, output);
     }
 }

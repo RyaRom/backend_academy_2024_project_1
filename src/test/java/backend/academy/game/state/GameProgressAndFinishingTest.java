@@ -39,7 +39,6 @@ class GameProgressAndFinishingTest {
         PrintStream writer = new PrintStream(outputStream);
 
         gameContext = new GameContext();
-        gameContext.testMode(true);
         gameContext.word(word);
         gameContext.outputWriter(writer);
         gameContext.difficulty(difficulty);
