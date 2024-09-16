@@ -1,6 +1,7 @@
 package backend.academy.utils;
 
 import backend.academy.data.Word;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.util.List;
@@ -39,8 +40,8 @@ public class FileParser {
     }
 
     private record WordConfig(
-        List<Word> easyWords,
-        List<Word> mediumWords,
-        List<Word> hardWords) {
+        @JsonProperty("EASY_WORDS") List<Word> easyWords,
+        @JsonProperty("MEDIUM_WORDS") List<Word> mediumWords,
+        @JsonProperty("HARD_WORDS") List<Word> hardWords) {
     }
 }
