@@ -24,61 +24,65 @@ class GameUtilsTest {
     private final PrintStream outputWriter = new PrintStream(outputStream);
 
     @Test
-    void readLetterValidInput() {
-        BufferedReader correctLetter = new BufferedReader(new StringReader("A\n"));
-        BufferedReader correctLetterLowerCase = new BufferedReader(new StringReader("a\n"));
-        BufferedReader correctHelp = new BufferedReader(new StringReader("HeLP\n"));
-        BufferedReader correctExit = new BufferedReader(new StringReader("   ExiT \n"));
+    void readLetterValidInput() throws IOException {
+        try (BufferedReader correctLetter = new BufferedReader(new StringReader("A\n"));
+             BufferedReader correctLetterLowerCase = new BufferedReader(new StringReader("a\n"));
+             BufferedReader correctHelp = new BufferedReader(new StringReader("HeLP\n"));
+             BufferedReader correctExit = new BufferedReader(new StringReader("   ExiT \n"))) {
 
-        String correctLetterResult = GameUtils.readLetter(correctLetter, outputWriter);
-        String correctLetterLowerCaseResult = GameUtils.readLetter(correctLetterLowerCase, outputWriter);
-        String correctHelpResult = GameUtils.readLetter(correctHelp, outputWriter);
-        String correctExitResult = GameUtils.readLetter(correctExit, outputWriter);
+            String correctLetterResult = GameUtils.readLetter(correctLetter, outputWriter);
+            String correctLetterLowerCaseResult = GameUtils.readLetter(correctLetterLowerCase, outputWriter);
+            String correctHelpResult = GameUtils.readLetter(correctHelp, outputWriter);
+            String correctExitResult = GameUtils.readLetter(correctExit, outputWriter);
 
-        assertEquals("A", correctLetterResult);
-        assertEquals("A", correctLetterLowerCaseResult);
-        assertEquals(HELP_COMMAND, correctHelpResult);
-        assertEquals(EXIT_COMMAND, correctExitResult);
+            assertEquals("A", correctLetterResult);
+            assertEquals("A", correctLetterLowerCaseResult);
+            assertEquals(HELP_COMMAND, correctHelpResult);
+            assertEquals(EXIT_COMMAND, correctExitResult);
+        }
     }
 
     @Test
-    void readLetterInvalidInput() {
-        BufferedReader incorrectInputLetters = new BufferedReader(new StringReader("aaa\nAP\ny"));
-        BufferedReader incorrectInputOther = new BufferedReader(new StringReader("%\nHeLp"));
+    void readLetterInvalidInput() throws IOException {
+        try (BufferedReader incorrectInputLetters = new BufferedReader(new StringReader("aaa\nAP\ny"));
+             BufferedReader incorrectInputOther = new BufferedReader(new StringReader("%\nHeLp"))) {
 
-        String incorrectInputLettersResult = GameUtils.readLetter(incorrectInputLetters, outputWriter);
-        String incorrectInputOtherResult = GameUtils.readLetter(incorrectInputOther, outputWriter);
+            String incorrectInputLettersResult = GameUtils.readLetter(incorrectInputLetters, outputWriter);
+            String incorrectInputOtherResult = GameUtils.readLetter(incorrectInputOther, outputWriter);
 
-        assertEquals(incorrectInputLettersResult, "Y");
-        assertEquals(incorrectInputOtherResult, "help");
+            assertEquals(incorrectInputLettersResult, "Y");
+            assertEquals(incorrectInputOtherResult, "help");
+        }
     }
 
     @Test
-    void readCommandValidInput() {
-        BufferedReader validInputInRange = new BufferedReader(new StringReader("5\n"));
-        BufferedReader validInputLowerBound = new BufferedReader(new StringReader("1\n"));
-        BufferedReader validInputUpperBound = new BufferedReader(new StringReader("10\n"));
+    void readCommandValidInput() throws IOException {
+        try (BufferedReader validInputInRange = new BufferedReader(new StringReader("5\n"));
+             BufferedReader validInputLowerBound = new BufferedReader(new StringReader("1\n"));
+             BufferedReader validInputUpperBound = new BufferedReader(new StringReader("10\n"))) {
 
-        Integer resultInRange = GameUtils.readCommand(validInputInRange, outputWriter, 1, 10);
-        Integer resultLowerBound = GameUtils.readCommand(validInputLowerBound, outputWriter, 1, 10);
-        Integer resultUpperBound = GameUtils.readCommand(validInputUpperBound, outputWriter, 1, 10);
+            Integer resultInRange = GameUtils.readCommand(validInputInRange, outputWriter, 1, 10);
+            Integer resultLowerBound = GameUtils.readCommand(validInputLowerBound, outputWriter, 1, 10);
+            Integer resultUpperBound = GameUtils.readCommand(validInputUpperBound, outputWriter, 1, 10);
 
-        assertEquals(Integer.valueOf(5), resultInRange);
-        assertEquals(Integer.valueOf(1), resultLowerBound);
-        assertEquals(Integer.valueOf(10), resultUpperBound);
+            assertEquals(Integer.valueOf(5), resultInRange);
+            assertEquals(Integer.valueOf(1), resultLowerBound);
+            assertEquals(Integer.valueOf(10), resultUpperBound);
+        }
     }
 
     @Test
-    void readCommandInvalidInput() {
-        BufferedReader invalidInputNonNumeric = new BufferedReader(new StringReader("abc\n12\n2"));
-        BufferedReader invalidInputOutOfRange = new BufferedReader(new StringReader("15\n7\n"));
+    void readCommandInvalidInput() throws IOException {
+        try (BufferedReader invalidInputNonNumeric = new BufferedReader(new StringReader("abc\n12\n2"));
+             BufferedReader invalidInputOutOfRange = new BufferedReader(new StringReader("15\n7\n"))) {
 
-        Integer resultNonNumeric = GameUtils.readCommand(invalidInputNonNumeric, outputWriter, 1, 10);
-        Integer resultOutOfRange = GameUtils.readCommand(invalidInputOutOfRange, outputWriter, 1, 10);
+            Integer resultNonNumeric = GameUtils.readCommand(invalidInputNonNumeric, outputWriter, 1, 10);
+            Integer resultOutOfRange = GameUtils.readCommand(invalidInputOutOfRange, outputWriter, 1, 10);
 
-        assertEquals(Integer.valueOf(2), resultNonNumeric);
-        assertEquals(Integer.valueOf(7), resultOutOfRange);
-        assertTrue(outputStream.toString().contains(INPUT_NOT_RECOGNIZED));
+            assertEquals(Integer.valueOf(2), resultNonNumeric);
+            assertEquals(Integer.valueOf(7), resultOutOfRange);
+            assertTrue(outputStream.toString().contains(INPUT_NOT_RECOGNIZED));
+        }
     }
 
     @Test
