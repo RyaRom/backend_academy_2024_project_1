@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static backend.academy.config.GameConfig.HARD_WORDS;
 import static backend.academy.config.GameConfig.THEMES;
-import static backend.academy.utils.GraphicUtils.DIFFICULTY_MENU;
 import static backend.academy.utils.GraphicUtils.HANGMAN_PREVIEW;
 import static backend.academy.utils.GraphicUtils.MAIN_MENU;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -57,7 +56,6 @@ class PreparationTest {
 
         assertTrue(outputStream.toString().contains(HANGMAN_PREVIEW));
         assertTrue(outputStream.toString().contains(MAIN_MENU));
-        assertTrue(outputStream.toString().contains(DIFFICULTY_MENU));
         assertNotNull(gameContext.difficulty());
         assertEquals(GameDifficulty.HARD, gameContext.difficulty());
         assertTrue(HARD_WORDS.stream().anyMatch(w -> w.equals(gameContext.word())));

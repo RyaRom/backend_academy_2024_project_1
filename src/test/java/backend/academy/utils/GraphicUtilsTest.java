@@ -4,6 +4,7 @@ import backend.academy.data.enums.WordTheme;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -28,7 +29,10 @@ class GraphicUtilsTest {
     @Test
     void getThemeMenuValidInput() {
         WordTheme[] themes = {WordTheme.ANIMALS, WordTheme.FOOD, WordTheme.BIOLOGY};
-        String result = GraphicUtils.getThemeMenu(themes);
+        String result =
+            GraphicUtils.getCustomMenu(
+                Arrays.stream(themes).map(Enum::toString).toArray(String[]::new),
+                "theme");
         String expected = String.join(System.lineSeparator(),
             "Select theme:",
             "0. Go back",
@@ -42,7 +46,7 @@ class GraphicUtilsTest {
 
     @Test
     void getThemeMenuInvalidInput() {
-        assertThatThrownBy(() -> GraphicUtils.getThemeMenu(new WordTheme[] {}))
+        assertThatThrownBy(() -> GraphicUtils.getCustomMenu(new String[] {}, ""))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("No string from the empty array");
     }

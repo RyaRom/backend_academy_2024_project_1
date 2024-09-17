@@ -17,12 +17,10 @@ import static backend.academy.utils.FileParser.addWordsFromJson;
 import static backend.academy.utils.FileParser.getJsonInDir;
 import static backend.academy.utils.GameUtils.pickRandomObject;
 import static backend.academy.utils.GameUtils.readCommand;
-import static backend.academy.utils.GraphicUtils.DIFFICULTY_MENU;
 import static backend.academy.utils.GraphicUtils.HANGMAN_PREVIEW;
 import static backend.academy.utils.GraphicUtils.MAIN_MENU;
 import static backend.academy.utils.GraphicUtils.clearScreen;
-import static backend.academy.utils.GraphicUtils.getCustomWordsMenu;
-import static backend.academy.utils.GraphicUtils.getThemeMenu;
+import static backend.academy.utils.GraphicUtils.getCustomMenu;
 
 @Log4j2
 @NoArgsConstructor
@@ -53,7 +51,8 @@ public class PreparationState implements GameState {
     }
 
     private void loadThemeSelector(GameContext gameContext) {
-        String themeMenu = getThemeMenu(THEMES);
+        var themeNames = Arrays.stream(THEMES).toArray();
+        String themeMenu = getCustomMenu(themeNames, "theme");
         gameContext.outputWriter().print(themeMenu);
         int themeMenuChoice = readCommand(
             gameContext.inputReader(),
@@ -71,7 +70,9 @@ public class PreparationState implements GameState {
     }
 
     private void loadDifficultySelector(GameContext gameContext) {
-        gameContext.outputWriter().print(DIFFICULTY_MENU);
+        gameContext.outputWriter().print(
+            getCustomMenu(Arrays.stream(
+                GameDifficulty.values()).toArray(), "difficulty"));
         int difficultyMenuChoice = readCommand(
             gameContext.inputReader(),
             gameContext.outputWriter(),
@@ -95,7 +96,8 @@ public class PreparationState implements GameState {
 
     private void loadCustomWordsSelector(GameContext gameContext) {
         String[] customWords = getJsonInDir(CUSTOM_WORD_FILE_LOCATION);
-        gameContext.outputWriter().println(getCustomWordsMenu(customWords));
+        String customWordsMenu = "custom wordlist (path: %s):".formatted(CUSTOM_WORD_FILE_LOCATION);
+        gameContext.outputWriter().println(getCustomMenu(customWords, customWordsMenu));
 
         int customWordsMenuChoice = readCommand(
             gameContext.inputReader(),

@@ -1,11 +1,9 @@
 package backend.academy.utils;
 
-import backend.academy.data.enums.WordTheme;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import lombok.experimental.UtilityClass;
-import static backend.academy.config.GameConfig.CUSTOM_WORD_FILE_LOCATION;
 
 @UtilityClass
 @SuppressWarnings("MultipleStringLiterals")
@@ -204,15 +202,6 @@ public class GraphicUtils {
         "Enter your choice: "
     );
 
-    public static final String DIFFICULTY_MENU = String.join(System.lineSeparator(),
-        "Select Difficulty:",
-        "0. Go back",
-        "1. Easy",
-        "2. Medium",
-        "3. Hard",
-        "Enter your choice: "
-    );
-
     public static final String WORD_MENU = String.join(System.lineSeparator(),
         "Word:               %s",
         "",
@@ -244,40 +233,30 @@ public class GraphicUtils {
         }).collect(Collectors.joining(" "));
     }
 
-    public static String getThemeMenu(WordTheme[] themes) {
-        if (themes.length < 1) {
+    public static <T> String getCustomMenu(T[] options, String menuName) {
+        if (options.length < 1) {
             throw new IllegalArgumentException("No string from the empty array");
         }
+
+        String[] optionsString = Arrays.stream(options)
+            .map(T::toString)
+            .toArray(String[]::new);
+
         StringBuilder stringBuilder = new StringBuilder()
-            .append("Select theme:")
+            .append("Select ")
+            .append(menuName)
+            .append(":")
             .append(System.lineSeparator())
             .append("0. Go back")
             .append(System.lineSeparator());
 
-        for (int i = 0; i < themes.length; i++) {
-            if (themes[i] == null) {
+        for (int i = 0; i < optionsString.length; i++) {
+            if (optionsString[i] == null) {
                 continue;
             }
             stringBuilder.append(i + 1)
                 .append(". ")
-                .append(themes[i])
-                .append(System.lineSeparator());
-        }
-        stringBuilder.append("Enter your choice: ");
-        return stringBuilder.toString();
-    }
-
-    public static String getCustomWordsMenu(String[] files) {
-        StringBuilder stringBuilder = new StringBuilder()
-            .append("Select custom wordlist (path: %s):".formatted(CUSTOM_WORD_FILE_LOCATION))
-            .append(System.lineSeparator())
-            .append("0. Go back")
-            .append(System.lineSeparator());
-
-        for (int i = 0; i < files.length; i++) {
-            stringBuilder.append(i + 1)
-                .append(". ")
-                .append(files[i])
+                .append(optionsString[i])
                 .append(System.lineSeparator());
         }
         stringBuilder.append("Enter your choice: ");
