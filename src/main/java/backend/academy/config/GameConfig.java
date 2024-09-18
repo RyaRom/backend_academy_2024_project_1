@@ -21,6 +21,9 @@ public class GameConfig {
 
     public static final Integer STAGES = 12;
 
+    public static final String[] EMPTY_HINT_TEXTS =
+        {"Waiting for something to happen?", "Nothing is here", "No help for you"};
+
     public static Set<Word> wordsList = new HashSet<>(DEFAULT_WORD_CONFIG);
 
     public static List<String> globalThemes = wordsList.stream()

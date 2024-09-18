@@ -10,10 +10,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
+import static backend.academy.config.GameConfig.EMPTY_HINT_TEXTS;
 import static backend.academy.config.GameConfig.EXIT_COMMAND;
 import static backend.academy.config.GameConfig.HELP_COMMAND;
 import static backend.academy.config.GameConfig.STAGES;
 import static backend.academy.config.GameConfig.globalDifficulties;
+import static backend.academy.utils.GameUtils.pickRandomObject;
 import static backend.academy.utils.GameUtils.readLetter;
 import static backend.academy.utils.GraphicUtils.GAME_STAGES;
 import static backend.academy.utils.GraphicUtils.NO_HINT_TEXT;
@@ -117,10 +119,15 @@ public class InProgressState implements GameState {
     private void printGameMenu(GameContext gameContext) {
         String wordLetters = getHangmanWordString(guessedLetters);
         String wrongLettersString = String.join(", ", wrongLetters);
-        String hint = hintEnabled ? gameContext.word().hint() : NO_HINT_TEXT;
         String theme = gameContext.theme();
         String difficulty = gameContext.difficulty().toString();
         String attempts = String.valueOf(STAGES - gameStage);
+
+        String hint = hintEnabled ? gameContext.word().hint() : NO_HINT_TEXT;
+        if (hint == null || hint.isEmpty() || hint.isBlank()) {
+            hint = pickRandomObject(EMPTY_HINT_TEXTS);
+        }
+
         String menu = WORD_MENU.formatted(
             wordLetters, wrongLettersString, hint, theme, difficulty, attempts);
         gameContext.outputWriter().println(menu);
