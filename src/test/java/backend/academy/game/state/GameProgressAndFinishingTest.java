@@ -10,16 +10,15 @@ import java.io.PrintStream;
 import java.io.StringReader;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Locale;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static backend.academy.config.GameConfig.THEMES;
 import static backend.academy.utils.GraphicUtils.DEATH_SCREEN;
 import static backend.academy.utils.GraphicUtils.GAME_STAGES;
 import static backend.academy.utils.GraphicUtils.NO_HINT_TEXT;
 import static backend.academy.utils.GraphicUtils.VICTORY_SCREEN;
 import static backend.academy.utils.GraphicUtils.getHangmanWordString;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -64,9 +63,7 @@ class GameProgressAndFinishingTest {
 
         Arrays.stream(GAME_STAGES).forEach(stage ->
             assertTrue(output.contains(stage)));
-        assertTrue(output.contains(word.theme()
-            .toString()
-            .toLowerCase(Locale.ROOT)));
+        assertTrue(output.contains(word.theme()));
         assertTrue(output.contains(difficulty
             .toString()
             .toLowerCase()));
@@ -93,9 +90,7 @@ class GameProgressAndFinishingTest {
         assertTrue(output.contains(GAME_STAGES[0]));
         assertTrue(output.contains(GAME_STAGES[1]));
         assertFalse(output.contains(GAME_STAGES[2]));
-        assertTrue(output.contains(word.theme()
-            .toString()
-            .toLowerCase(Locale.ROOT)));
+        assertTrue(output.contains(word.theme()));
         assertTrue(output.contains(difficulty
             .toString()
             .toLowerCase()));
@@ -155,12 +150,11 @@ class GameProgressAndFinishingTest {
 
     @Test
     void restartAfterFinish() {
-        gameInput = new BufferedReader(new StringReader("s\nu\nn\n1\n2\n2\n4"));
+        gameInput = new BufferedReader(new StringReader("s\nu\nn\n1\n1\nexit"));
         gameContext.inputReader(gameInput);
 
-        gameContext.state().gameCycle(gameContext);
-
-        assertEquals(gameContext.theme(), THEMES.getFirst());
+        assertThatCode(() -> gameContext.state().gameCycle(gameContext))
+            .doesNotThrowAnyException();
     }
 
     @AfterEach

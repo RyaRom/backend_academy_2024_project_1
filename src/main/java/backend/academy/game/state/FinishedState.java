@@ -22,7 +22,7 @@ public class FinishedState implements GameState {
             return;
         }
         var screen = isVictory ? VICTORY_SCREEN : DEATH_SCREEN;
-        gameContext.outputWriter().println(screen.formatted(gameContext.word()));
+        gameContext.outputWriter().printf((screen) + "%n", gameContext.word());
 
         int menuChose = readCommand(
             gameContext.inputReader(),

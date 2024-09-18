@@ -88,7 +88,7 @@ class GameUtilsTest {
     @Test
     void pickRandomObjectTest() {
         String[] oneElement = {""};
-        Set<Word> words = GameConfig.WORDS_LIST;
+        Set<Word> words = GameConfig.wordsList;
         Word word = GameUtils.pickRandomObject(words);
 
         assertThatThrownBy(() -> GameUtils.pickRandomObject(new String[0]))

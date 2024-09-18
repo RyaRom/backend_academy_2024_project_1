@@ -9,7 +9,7 @@ import java.io.StringReader;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static backend.academy.config.GameConfig.THEMES;
+import static backend.academy.config.GameConfig.globalThemes;
 import static backend.academy.utils.GraphicUtils.HANGMAN_PREVIEW;
 import static backend.academy.utils.GraphicUtils.MAIN_MENU;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -68,7 +68,7 @@ class PreparationTest {
 
         assertTrue(outputStream.toString().contains(HANGMAN_PREVIEW));
         assertTrue(outputStream.toString().contains(MAIN_MENU));
-        assertEquals(THEMES.get(theme - 1), gameContext.theme());
+        assertEquals(globalThemes.get(theme - 1), gameContext.theme());
         assertEquals(gameContext.theme(), gameContext.word().theme());
         assertEquals(InProgressState.class, gameContext.state().getClass());
     }

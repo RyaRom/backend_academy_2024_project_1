@@ -10,10 +10,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
-import static backend.academy.config.GameConfig.DIFFICULTIES;
 import static backend.academy.config.GameConfig.EXIT_COMMAND;
 import static backend.academy.config.GameConfig.HELP_COMMAND;
 import static backend.academy.config.GameConfig.STAGES;
+import static backend.academy.config.GameConfig.globalDifficulties;
 import static backend.academy.utils.GameUtils.readLetter;
 import static backend.academy.utils.GraphicUtils.GAME_STAGES;
 import static backend.academy.utils.GraphicUtils.NO_HINT_TEXT;
@@ -95,7 +95,7 @@ public class InProgressState implements GameState {
         if (!wrongLetters.add(letter)) {
             return;
         }
-        int step = DIFFICULTIES.stream()
+        int step = globalDifficulties.stream()
             .filter(dif -> gameContext.difficulty().equals(dif))
             .map(Difficulty::level)
             .findAny()

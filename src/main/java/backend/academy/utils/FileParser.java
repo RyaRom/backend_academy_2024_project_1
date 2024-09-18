@@ -7,10 +7,10 @@ import java.io.File;
 import java.util.List;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
-import static backend.academy.config.GameConfig.DIFFICULTIES;
-import static backend.academy.config.GameConfig.THEMES;
-import static backend.academy.config.GameConfig.WORDS_LIST;
 import static backend.academy.config.GameConfig.WORD_FILE_LOCATION;
+import static backend.academy.config.GameConfig.globalDifficulties;
+import static backend.academy.config.GameConfig.globalThemes;
+import static backend.academy.config.GameConfig.wordsList;
 
 @Log4j2
 @UtilityClass
@@ -26,14 +26,14 @@ public class FileParser {
 
         log.info("Adding words from JSON file: {}", config);
 
-        WORDS_LIST.addAll(config);
+        wordsList.addAll(config);
 
-        DIFFICULTIES = WORDS_LIST.stream()
+        globalDifficulties = wordsList.stream()
             .map(Word::difficulty)
             .distinct()
             .toList();
 
-        THEMES = WORDS_LIST.stream()
+        globalThemes = wordsList.stream()
             .map(Word::theme)
             .distinct()
             .toList();

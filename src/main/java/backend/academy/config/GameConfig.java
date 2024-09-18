@@ -21,14 +21,14 @@ public class GameConfig {
 
     public static final Integer STAGES = 12;
 
-    public static Set<Word> WORDS_LIST = new HashSet<>(DEFAULT_WORD_CONFIG);
+    public static Set<Word> wordsList = new HashSet<>(DEFAULT_WORD_CONFIG);
 
-    public static List<String> THEMES = WORDS_LIST.stream()
+    public static List<String> globalThemes = wordsList.stream()
         .map(Word::theme)
         .distinct()
         .toList();
 
-    public static List<Difficulty> DIFFICULTIES = WORDS_LIST.stream()
+    public static List<Difficulty> globalDifficulties = wordsList.stream()
         .map(Word::difficulty)
         .distinct()
         .toList();

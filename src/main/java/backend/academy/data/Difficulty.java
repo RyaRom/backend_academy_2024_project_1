@@ -12,4 +12,9 @@ public record Difficulty(String name, int level) {
         }
         return false;
     }
+
+    @Override
+    public int hashCode() {
+        return name.toLowerCase().hashCode();
+    }
 }
