@@ -2,6 +2,7 @@ package backend.academy.utils;
 
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import lombok.experimental.UtilityClass;
 
@@ -233,14 +234,10 @@ public class GraphicUtils {
         }).collect(Collectors.joining(" "));
     }
 
-    public static <T> String getCustomMenu(T[] options, String menuName) {
-        if (options.length < 1) {
+    public static String getCustomMenu(List<String> options, String menuName) {
+        if (options.isEmpty()) {
             throw new IllegalArgumentException("No string from the empty array");
         }
-
-        String[] optionsString = Arrays.stream(options)
-            .map(T::toString)
-            .toArray(String[]::new);
 
         StringBuilder stringBuilder = new StringBuilder()
             .append("Select ")
@@ -250,13 +247,13 @@ public class GraphicUtils {
             .append("0. Go back")
             .append(System.lineSeparator());
 
-        for (int i = 0; i < optionsString.length; i++) {
-            if (optionsString[i] == null) {
+        for (int i = 0; i < options.size(); i++) {
+            if (options.get(i) == null) {
                 continue;
             }
             stringBuilder.append(i + 1)
                 .append(". ")
-                .append(optionsString[i])
+                .append(options.get(i))
                 .append(System.lineSeparator());
         }
         stringBuilder.append("Enter your choice: ");

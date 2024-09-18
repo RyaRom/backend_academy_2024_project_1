@@ -1,8 +1,7 @@
 package backend.academy.game.state;
 
+import backend.academy.data.Difficulty;
 import backend.academy.data.Word;
-import backend.academy.data.enums.GameDifficulty;
-import backend.academy.data.enums.WordTheme;
 import backend.academy.game.GameContext;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -27,9 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameProgressAndFinishingTest {
 
-    private final Word word = new Word("Sun", WordTheme.SCIENCE, "The star at the center of our solar system.");
+    private final Difficulty difficulty = new Difficulty("easy", 1);
 
-    private final GameDifficulty difficulty = GameDifficulty.EASY;
+    private final Word word = new Word("Sun", "Science", "The star at the center of our solar system.", difficulty);
 
     private ByteArrayOutputStream outputStream;
 
@@ -124,7 +123,7 @@ class GameProgressAndFinishingTest {
 
     @Test
     void sameLetterIncorrect() {
-        gameContext.difficulty(GameDifficulty.HARD);
+        gameContext.difficulty(new Difficulty("hard", 3));
         gameInput = new BufferedReader(new StringReader("w\nw\nw\nw\nw\nw\nw\nw\nw\nw\n2\nexit"));
         gameContext.inputReader(gameInput);
 
@@ -161,7 +160,7 @@ class GameProgressAndFinishingTest {
 
         gameContext.state().gameCycle(gameContext);
 
-        assertEquals(gameContext.theme(), THEMES[0]);
+        assertEquals(gameContext.theme(), THEMES.getFirst());
     }
 
     @AfterEach

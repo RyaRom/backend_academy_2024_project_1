@@ -1,8 +1,6 @@
 package backend.academy.data;
 
-import backend.academy.data.enums.WordTheme;
-
-public record Word(String content, WordTheme theme, String hint) {
+public record Word(String content, String theme, String hint, Difficulty difficulty) {
     @Override public String toString() {
         return content;
     }

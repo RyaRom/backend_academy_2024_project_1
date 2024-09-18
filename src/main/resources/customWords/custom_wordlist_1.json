@@ -1,9 +1,11 @@
-{
-    "easyWords": [
-        {
-            "content": "Sun",
-            "theme": "SCIENCE",
-            "hint": "The star at the center of our solar system."
+[
+    {
+        "content": "testWord",
+        "theme": "UNKNOWN",
+        "hint": "nothing is here",
+        "difficulty": {
+            "name": "impossible",
+            "level": 5
         }
-    ]
-}
+    }
+]

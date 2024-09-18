@@ -1,12 +1,12 @@
 package backend.academy.config;
 
+import backend.academy.data.Difficulty;
 import backend.academy.data.Word;
-import backend.academy.data.enums.WordTheme;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import lombok.experimental.UtilityClass;
-import static backend.academy.utils.FileParser.getEasyWords;
-import static backend.academy.utils.FileParser.getHardWords;
-import static backend.academy.utils.FileParser.getMediumWords;
+import static backend.academy.utils.FileParser.DEFAULT_WORD_CONFIG;
 
 @UtilityClass
 @SuppressWarnings("MultipleStringLiterals")
@@ -19,19 +19,17 @@ public class GameConfig {
 
     public static final String EXIT_COMMAND = "exit";
 
-    public static final WordTheme[] THEMES = WordTheme.values();
-
     public static final Integer STAGES = 12;
 
-    public static final Integer EASY_MODE_STEPS = 1;
+    public static Set<Word> WORDS_LIST = new HashSet<>(DEFAULT_WORD_CONFIG);
 
-    public static final Integer MEDIUM_MODE_STEPS = 2;
+    public static List<String> THEMES = WORDS_LIST.stream()
+        .map(Word::theme)
+        .distinct()
+        .toList();
 
-    public static final Integer HARD_MODE_STEPS = 3;
-
-    public static final Set<Word> EASY_WORDS = getEasyWords();
-
-    public static final Set<Word> MEDIUM_WORDS = getMediumWords();
-
-    public static final Set<Word> HARD_WORDS = getHardWords();
+    public static List<Difficulty> DIFFICULTIES = WORDS_LIST.stream()
+        .map(Word::difficulty)
+        .distinct()
+        .toList();
 }

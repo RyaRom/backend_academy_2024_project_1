@@ -1,18 +1,18 @@
 package backend.academy.game.state;
 
+import backend.academy.data.Difficulty;
 import backend.academy.data.Word;
-import backend.academy.data.enums.GameDifficulty;
 import backend.academy.game.GameContext;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import static backend.academy.config.GameConfig.CUSTOM_WORD_FILE_LOCATION;
-import static backend.academy.config.GameConfig.EASY_WORDS;
-import static backend.academy.config.GameConfig.HARD_WORDS;
-import static backend.academy.config.GameConfig.MEDIUM_WORDS;
+import static backend.academy.config.GameConfig.DIFFICULTIES;
 import static backend.academy.config.GameConfig.THEMES;
+import static backend.academy.config.GameConfig.WORDS_LIST;
 import static backend.academy.utils.FileParser.addWordsFromJson;
 import static backend.academy.utils.FileParser.getJsonInDir;
 import static backend.academy.utils.GameUtils.pickRandomObject;
@@ -51,53 +51,50 @@ public class PreparationState implements GameState {
     }
 
     private void loadThemeSelector(GameContext gameContext) {
-        var themeNames = Arrays.stream(THEMES).toArray();
-        String themeMenu = getCustomMenu(themeNames, "theme");
+        String themeMenu = getCustomMenu(THEMES, "theme");
         gameContext.outputWriter().print(themeMenu);
         int themeMenuChoice = readCommand(
             gameContext.inputReader(),
             gameContext.outputWriter(),
-            0, THEMES.length);
+            0, THEMES.size());
         if (themeMenuChoice == 0) {
             gameCycle(gameContext);
             return;
         }
 
         //Themes in menu are shifted by 1
-        gameContext.theme(THEMES[themeMenuChoice - 1]);
-        log.info("Theme {} chosen.", THEMES[themeMenuChoice - 1]);
+        String theme = THEMES.get(themeMenuChoice - 1);
+        gameContext.theme(theme);
+        log.info("Theme {} chosen.", theme);
         gameCycle(gameContext);
     }
 
     private void loadDifficultySelector(GameContext gameContext) {
         gameContext.outputWriter().print(
-            getCustomMenu(Arrays.stream(
-                GameDifficulty.values()).toArray(), "difficulty"));
+            getCustomMenu(DIFFICULTIES.stream().map(Difficulty::name).toList(),
+                "difficulty"));
         int difficultyMenuChoice = readCommand(
             gameContext.inputReader(),
             gameContext.outputWriter(),
-            0, 3);
+            0, DIFFICULTIES.size());
 
         if (difficultyMenuChoice == 0) {
             gameCycle(gameContext);
             return;
         }
 
-        GameDifficulty difficulty = switch (difficultyMenuChoice) {
-            case 1 -> GameDifficulty.EASY;
-            case 2 -> GameDifficulty.MEDIUM;
-            case 3 -> GameDifficulty.HARD;
-            default -> throw new IllegalStateException("Unexpected value: " + difficultyMenuChoice);
-        };
-        log.info("Difficulty {} chosen.", difficulty);
+        Difficulty difficulty = DIFFICULTIES.get(difficultyMenuChoice - 1);
         gameContext.difficulty(difficulty);
+        log.info("Difficulty {} chosen.", difficulty);
         gameCycle(gameContext);
     }
 
     private void loadCustomWordsSelector(GameContext gameContext) {
         String[] customWords = getJsonInDir(CUSTOM_WORD_FILE_LOCATION);
         String customWordsMenu = "custom wordlist (path: %s):".formatted(CUSTOM_WORD_FILE_LOCATION);
-        gameContext.outputWriter().println(getCustomMenu(customWords, customWordsMenu));
+        gameContext.outputWriter().println(getCustomMenu(
+            Arrays.stream(customWords).toList(),
+            customWordsMenu));
 
         int customWordsMenuChoice = readCommand(
             gameContext.inputReader(),
@@ -116,15 +113,10 @@ public class PreparationState implements GameState {
     }
 
     private Word selectRandomWord(GameContext gameContext) {
-        GameDifficulty difficulty = gameContext.difficulty();
-        var wordlist = switch (difficulty) {
-            case EASY -> EASY_WORDS;
-            case MEDIUM -> MEDIUM_WORDS;
-            case HARD -> HARD_WORDS;
-        };
-        wordlist =
-            wordlist.stream()
-                .filter(word -> word.theme() == gameContext.theme())
+        Set<Word> wordlist =
+            WORDS_LIST.stream()
+                .filter(word -> word.theme().equalsIgnoreCase(gameContext.theme()))
+                .filter(word -> word.difficulty().equals(gameContext.difficulty()))
                 .collect(Collectors.toSet());
         log.info("All words filtered by theme and difficulty: {}", wordlist);
         return pickRandomObject(wordlist);

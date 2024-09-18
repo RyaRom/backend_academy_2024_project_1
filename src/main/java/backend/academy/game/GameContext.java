@@ -1,8 +1,7 @@
 package backend.academy.game;
 
+import backend.academy.data.Difficulty;
 import backend.academy.data.Word;
-import backend.academy.data.enums.GameDifficulty;
-import backend.academy.data.enums.WordTheme;
 import backend.academy.game.state.GameState;
 import backend.academy.game.state.PreparationState;
 import java.io.BufferedReader;
@@ -12,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
+import static backend.academy.config.GameConfig.DIFFICULTIES;
 import static backend.academy.config.GameConfig.THEMES;
 import static backend.academy.utils.GameUtils.pickRandomObject;
 
@@ -24,9 +24,9 @@ public class GameContext {
 
     private GameState state = new PreparationState();
 
-    private GameDifficulty difficulty = pickRandomObject(GameDifficulty.values());
+    private Difficulty difficulty = pickRandomObject(DIFFICULTIES);
 
-    private WordTheme theme = pickRandomObject(THEMES);
+    private String theme = pickRandomObject(THEMES);
 
     private Word word;
 
@@ -35,6 +35,10 @@ public class GameContext {
     private PrintStream outputWriter;
 
     public void init(BufferedReader inputReader, PrintStream outputWriter) {
+        if (THEMES.isEmpty() || DIFFICULTIES.isEmpty()) {
+            throw new IllegalStateException("No themes or difficulties found in wordlist");
+        }
+
         this.inputReader = inputReader;
         this.outputWriter = outputWriter;
         state.gameCycle(this);

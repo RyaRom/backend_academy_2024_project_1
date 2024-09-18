@@ -1,6 +1,5 @@
 package backend.academy.game.state;
 
-import backend.academy.data.enums.GameDifficulty;
 import backend.academy.game.GameContext;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -10,7 +9,6 @@ import java.io.StringReader;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static backend.academy.config.GameConfig.HARD_WORDS;
 import static backend.academy.config.GameConfig.THEMES;
 import static backend.academy.utils.GraphicUtils.HANGMAN_PREVIEW;
 import static backend.academy.utils.GraphicUtils.MAIN_MENU;
@@ -57,8 +55,6 @@ class PreparationTest {
         assertTrue(outputStream.toString().contains(HANGMAN_PREVIEW));
         assertTrue(outputStream.toString().contains(MAIN_MENU));
         assertNotNull(gameContext.difficulty());
-        assertEquals(GameDifficulty.HARD, gameContext.difficulty());
-        assertTrue(HARD_WORDS.stream().anyMatch(w -> w.equals(gameContext.word())));
         assertEquals(gameContext.theme(), gameContext.word().theme());
         assertEquals(InProgressState.class, gameContext.state().getClass());
     }
@@ -72,7 +68,7 @@ class PreparationTest {
 
         assertTrue(outputStream.toString().contains(HANGMAN_PREVIEW));
         assertTrue(outputStream.toString().contains(MAIN_MENU));
-        assertEquals(THEMES[theme - 1], gameContext.theme());
+        assertEquals(THEMES.get(theme - 1), gameContext.theme());
         assertEquals(gameContext.theme(), gameContext.word().theme());
         assertEquals(InProgressState.class, gameContext.state().getClass());
     }

@@ -1,5 +1,6 @@
 package backend.academy.game.state;
 
+import backend.academy.data.Difficulty;
 import backend.academy.game.GameContext;
 import java.util.Arrays;
 import java.util.Locale;
@@ -9,11 +10,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
-import static backend.academy.config.GameConfig.EASY_MODE_STEPS;
+import static backend.academy.config.GameConfig.DIFFICULTIES;
 import static backend.academy.config.GameConfig.EXIT_COMMAND;
-import static backend.academy.config.GameConfig.HARD_MODE_STEPS;
 import static backend.academy.config.GameConfig.HELP_COMMAND;
-import static backend.academy.config.GameConfig.MEDIUM_MODE_STEPS;
 import static backend.academy.config.GameConfig.STAGES;
 import static backend.academy.utils.GameUtils.readLetter;
 import static backend.academy.utils.GraphicUtils.GAME_STAGES;
@@ -96,12 +95,13 @@ public class InProgressState implements GameState {
         if (!wrongLetters.add(letter)) {
             return;
         }
-        switch (gameContext.difficulty()) {
-            case EASY -> gameStage += EASY_MODE_STEPS;
-            case MEDIUM -> gameStage += MEDIUM_MODE_STEPS;
-            case HARD -> gameStage += HARD_MODE_STEPS;
-            default -> throw new IllegalStateException("Somehow difficulty is empty");
-        }
+        int step = DIFFICULTIES.stream()
+            .filter(dif -> gameContext.difficulty().equals(dif))
+            .map(Difficulty::level)
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("No such difficulty"));
+
+        gameStage += step;
     }
 
     private void correctLetterAction(GameContext gameContext, String guessedLetter) {
@@ -118,8 +118,8 @@ public class InProgressState implements GameState {
         String wordLetters = getHangmanWordString(guessedLetters);
         String wrongLettersString = String.join(", ", wrongLetters);
         String hint = hintEnabled ? gameContext.word().hint() : NO_HINT_TEXT;
-        String theme = gameContext.theme().toString().toLowerCase(Locale.ROOT);
-        String difficulty = gameContext.difficulty().toString().toLowerCase(Locale.ROOT);
+        String theme = gameContext.theme();
+        String difficulty = gameContext.difficulty().toString();
         String attempts = String.valueOf(STAGES - gameStage);
         String menu = WORD_MENU.formatted(
             wordLetters, wrongLettersString, hint, theme, difficulty, attempts);

@@ -1,7 +1,6 @@
 package backend.academy.utils;
 
 import backend.academy.data.Word;
-import backend.academy.data.enums.WordTheme;
 import java.io.File;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
@@ -13,13 +12,13 @@ class FileParserTest {
     void testParseValidJson() throws IOException {
         File validJsonFile =
             createTemporaryFile(
-                "{\"content\":\"testWord\",\"theme\":\"ANIMALS\",\"hint\":\"testHint\"}"
+                "[{\"content\":\"testWord\",\"theme\":\"ANIMALS\",\"hint\":\"testHint\"}]"
             );
 
-        Word word = FileParser.parseJson(validJsonFile, Word.class);
+        Word word = FileParser.parseJsonToWordList(validJsonFile).getFirst();
 
         assertEquals("testWord", word.content());
-        assertEquals(WordTheme.ANIMALS, word.theme());
+        assertEquals("ANIMALS", word.theme());
         assertEquals("testHint", word.hint());
     }
 
@@ -30,7 +29,7 @@ class FileParserTest {
                 "{\"content\":\"test\",\"hint\":}"
             );
 
-        assertThrows(RuntimeException.class, () -> FileParser.parseJson(invalidJsonFile, Word.class));
+        assertThrows(RuntimeException.class, () -> FileParser.parseJsonToWordList(invalidJsonFile));
     }
 
     private File createTemporaryFile(String content) throws IOException {

@@ -1,338 +1,596 @@
-{
-    "easyWords": [
-        {
-            "content": "Sun",
-            "theme": "SCIENCE",
-            "hint": "The star at the center of our solar system."
-        },
-        {
-            "content": "Star",
-            "theme": "SCIENCE",
-            "hint": "A celestial body that emits light."
-        },
-        {
-            "content": "Atom",
-            "theme": "SCIENCE",
-            "hint": "The smallest unit of matter."
-        },
-        {
-            "content": "Moon",
-            "theme": "SCIENCE",
-            "hint": "Earth's only natural satellite."
-        },
-        {
-            "content": "Bread",
-            "theme": "FOOD",
-            "hint": "A staple food made from flour and water."
-        },
-        {
-            "content": "Milk",
-            "theme": "FOOD",
-            "hint": "A dairy product often added to coffee or cereal."
-        },
-        {
-            "content": "Apple",
-            "theme": "FOOD",
-            "hint": "A fruit that keeps the doctor away."
-        },
-        {
-            "content": "Leaf",
-            "theme": "BIOLOGY",
-            "hint": "Part of a plant that carries out photosynthesis."
-        },
-        {
-            "content": "Cat",
-            "theme": "ANIMALS",
-            "hint": "A common pet that purrs."
-        },
-        {
-            "content": "Cell",
-            "theme": "BIOLOGY",
-            "hint": "The basic structural unit of all living organisms."
-        },
-        {
-            "content": "Dog",
-            "theme": "ANIMALS",
-            "hint": "A loyal pet, often called man's best friend."
-        },
-        {
-            "content": "Heart",
-            "theme": "BIOLOGY",
-            "hint": "An organ that pumps blood throughout the body."
-        },
-        {
-            "content": "Cow",
-            "theme": "ANIMALS",
-            "hint": "A farm animal that produces milk."
-        },
-        {
-            "content": "Rice",
-            "theme": "FOOD",
-            "hint": "A staple grain, especially in Asia."
-        },
-        {
-            "content": "Bone",
-            "theme": "BIOLOGY",
-            "hint": "The rigid organ that constitutes part of the skeleton."
-        },
-        {
-            "content": "Fish",
-            "theme": "ANIMALS",
-            "hint": "An aquatic animal with gills."
-        },
-        {
-            "content": "Light",
-            "theme": "SCIENCE",
-            "hint": "The natural agent that makes things visible."
-        },
-        {
-            "content": "Pizza",
-            "theme": "FOOD",
-            "hint": "A popular Italian dish with cheese and toppings."
-        },
-        {
-            "content": "Skin",
-            "theme": "BIOLOGY",
-            "hint": "The body's largest organ, covering the exterior."
-        },
-        {
-            "content": "Lion",
-            "theme": "ANIMALS",
-            "hint": "The king of the jungle."
-        },
-        {
-            "content": "Sword",
-            "theme": "HISTORY",
-            "hint": "A weapon used by medieval knights."
-        },
-        {
-            "content": "King",
-            "theme": "HISTORY",
-            "hint": "Ancient leader of the country."
+[
+    {
+        "content": "Sun",
+        "theme": "SCIENCE",
+        "hint": "The star at the center of our solar system.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
         }
-    ],
-    "mediumWords": [
-        {
-            "content": "Gravity",
-            "theme": "SCIENCE",
-            "hint": "The force that attracts objects towards Earth."
-        },
-        {
-            "content": "Neuron",
-            "theme": "BIOLOGY",
-            "hint": "A nerve cell that transmits signals in the body."
-        },
-        {
-            "content": "Penguin",
-            "theme": "ANIMALS",
-            "hint": "A flightless bird that lives in Antarctica."
-        },
-        {
-            "content": "Galaxy",
-            "theme": "SCIENCE",
-            "hint": "A system of millions or billions of stars."
-        },
-        {
-            "content": "Curry",
-            "theme": "FOOD",
-            "hint": "A dish popular in South Asian cuisine, known for its spices."
-        },
-        {
-            "content": "Sushi",
-            "theme": "FOOD",
-            "hint": "A Japanese dish made with rice and seafood."
-        },
-        {
-            "content": "Chromosome",
-            "theme": "BIOLOGY",
-            "hint": "A structure of nucleic acids carrying genetic information."
-        },
-        {
-            "content": "Quantum",
-            "theme": "SCIENCE",
-            "hint": "A branch of physics dealing with atomic and subatomic particles."
-        },
-        {
-            "content": "Lasagna",
-            "theme": "FOOD",
-            "hint": "An Italian dish with layers of pasta, cheese, and meat."
-        },
-        {
-            "content": "Giraffe",
-            "theme": "ANIMALS",
-            "hint": "The tallest land animal with a long neck."
-        },
-        {
-            "content": "Baguette",
-            "theme": "FOOD",
-            "hint": "A long, narrow loaf of French bread."
-        },
-        {
-            "content": "Enzyme",
-            "theme": "BIOLOGY",
-            "hint": "A protein that accelerates chemical reactions in the body."
-        },
-        {
-            "content": "DNA",
-            "theme": "BIOLOGY",
-            "hint": "The molecule that carries genetic instructions."
-        },
-        {
-            "content": "Dolphin",
-            "theme": "ANIMALS",
-            "hint": "A highly intelligent marine mammal."
-        },
-        {
-            "content": "Orbit",
-            "theme": "SCIENCE",
-            "hint": "The path of a celestial body around another."
-        },
-        {
-            "content": "Elephant",
-            "theme": "ANIMALS",
-            "hint": "The largest land animal with a trunk."
-        },
-        {
-            "content": "Voltage",
-            "theme": "SCIENCE",
-            "hint": "The electric potential difference between two points."
-        },
-        {
-            "content": "Taco",
-            "theme": "FOOD",
-            "hint": "A Mexican dish with a folded or rolled tortilla."
-        },
-        {
-            "content": "Mitochondria",
-            "theme": "BIOLOGY",
-            "hint": "The powerhouse of the cell."
-        },
-        {
-            "content": "Octopus",
-            "theme": "ANIMALS",
-            "hint": "A marine animal with eight arms."
-        },
-        {
-            "content": "Crusade",
-            "theme": "HISTORY",
-            "hint": "A religious war in medieval times."
-        },
-        {
-            "content": "Viking",
-            "theme": "HISTORY",
-            "hint": "A Scandinavian explorer and raider."
+    },
+    {
+        "content": "Star",
+        "theme": "SCIENCE",
+        "hint": "A celestial body that emits light.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
         }
-    ],
-    "hardWords": [
-        {
-            "content": "Relativity",
-            "theme": "SCIENCE",
-            "hint": "Einstein's theory that space and time are interwoven."
-        },
-        {
-            "content": "Apoptosis",
-            "theme": "BIOLOGY",
-            "hint": "The process of programmed cell death."
-        },
-        {
-            "content": "Bouillabaisse",
-            "theme": "FOOD",
-            "hint": "A traditional Provençal fish stew originating from France."
-        },
-        {
-            "content": "Orangutan",
-            "theme": "ANIMALS",
-            "hint": "A great ape found in the rainforests of Borneo and Sumatra."
-        },
-        {
-            "content": "Photon",
-            "theme": "SCIENCE",
-            "hint": "A quantum of light or other electromagnetic radiation."
-        },
-        {
-            "content": "Tiramisu",
-            "theme": "FOOD",
-            "hint": "An Italian dessert made with coffee, cheese, and cocoa."
-        },
-        {
-            "content": "Hemoglobin",
-            "theme": "BIOLOGY",
-            "hint": "The protein in red blood cells that carries oxygen."
-        },
-        {
-            "content": "Guillotine",
-            "theme": "HISTORY",
-            "hint": "A device used for executions during the French Revolution."
-        },
-        {
-            "content": "Absolutism",
-            "theme": "HISTORY",
-            "hint": "A political system where the monarch holds total power."
-        },
-        {
-            "content": "Entanglement",
-            "theme": "SCIENCE",
-            "hint": "A quantum phenomenon where particles remain interconnected."
-        },
-        {
-            "content": "Paella",
-            "theme": "FOOD",
-            "hint": "A Spanish rice dish originally from Valencia."
-        },
-        {
-            "content": "Axolotl",
-            "theme": "ANIMALS",
-            "hint": "A type of salamander known for its regenerative abilities."
-        },
-        {
-            "content": "Thermodynamics",
-            "theme": "SCIENCE",
-            "hint": "The study of heat and energy transfer."
-        },
-        {
-            "content": "Chameleon",
-            "theme": "ANIMALS",
-            "hint": "A lizard known for changing its skin color."
-        },
-        {
-            "content": "Casumartzu",
-            "theme": "FOOD",
-            "hint": "Traditional Sardinian sheep milk cheese."
-        },
-        {
-            "content": "Platypus",
-            "theme": "ANIMALS",
-            "hint": "An egg-laying mammal native to Australia."
-        },
-        {
-            "content": "Homeostasis",
-            "theme": "BIOLOGY",
-            "hint": "The process of maintaining a stable internal environment."
-        },
-        {
-            "content": "Kimchi",
-            "theme": "FOOD",
-            "hint": "A traditional Korean dish of fermented vegetables."
-        },
-        {
-            "content": "Synapse",
-            "theme": "BIOLOGY",
-            "hint": "The junction between two neurons where signals are transmitted."
-        },
-        {
-            "content": "Fission",
-            "theme": "SCIENCE",
-            "hint": "The splitting of an atomic nucleus, releasing energy."
-        },
-        {
-            "content": "Cytoplasm",
-            "theme": "BIOLOGY",
-            "hint": "The material within a cell, excluding the nucleus."
-        },
-        {
-            "content": "Narwhal",
-            "theme": "ANIMALS",
-            "hint": "A marine mammal known as the 'unicorn of the sea' due to its long tusk."
+    },
+    {
+        "content": "Atom",
+        "theme": "SCIENCE",
+        "hint": "The smallest unit of matter.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
         }
-    ]
-}
+    },
+    {
+        "content": "Moon",
+        "theme": "SCIENCE",
+        "hint": "Earth's only natural satellite.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Bread",
+        "theme": "FOOD",
+        "hint": "A staple food made from flour and water.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Milk",
+        "theme": "FOOD",
+        "hint": "A dairy product often added to coffee or cereal.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Apple",
+        "theme": "FOOD",
+        "hint": "A fruit that keeps the doctor away.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Leaf",
+        "theme": "BIOLOGY",
+        "hint": "Part of a plant that carries out photosynthesis.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Cat",
+        "theme": "ANIMALS",
+        "hint": "A common pet that purrs.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Cell",
+        "theme": "BIOLOGY",
+        "hint": "The basic structural unit of all living organisms.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Dog",
+        "theme": "ANIMALS",
+        "hint": "A loyal pet, often called man's best friend.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Heart",
+        "theme": "BIOLOGY",
+        "hint": "An organ that pumps blood throughout the body.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Cow",
+        "theme": "ANIMALS",
+        "hint": "A farm animal that produces milk.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Rice",
+        "theme": "FOOD",
+        "hint": "A staple grain, especially in Asia.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Bone",
+        "theme": "BIOLOGY",
+        "hint": "The rigid organ that constitutes part of the skeleton.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Fish",
+        "theme": "ANIMALS",
+        "hint": "An aquatic animal with gills.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Light",
+        "theme": "SCIENCE",
+        "hint": "The natural agent that makes things visible.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Pizza",
+        "theme": "FOOD",
+        "hint": "A popular Italian dish with cheese and toppings.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Skin",
+        "theme": "BIOLOGY",
+        "hint": "The body's largest organ, covering the exterior.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Lion",
+        "theme": "ANIMALS",
+        "hint": "The king of the jungle.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Sword",
+        "theme": "HISTORY",
+        "hint": "A weapon used by medieval knights.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "King",
+        "theme": "HISTORY",
+        "hint": "Ancient leader of the country.",
+        "difficulty": {
+            "name": "easy",
+            "level": 1
+        }
+    },
+    {
+        "content": "Gravity",
+        "theme": "SCIENCE",
+        "hint": "The force that attracts objects towards Earth.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Neuron",
+        "theme": "BIOLOGY",
+        "hint": "A nerve cell that transmits signals in the body.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Penguin",
+        "theme": "ANIMALS",
+        "hint": "A flightless bird that lives in Antarctica.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Galaxy",
+        "theme": "SCIENCE",
+        "hint": "A system of millions or billions of stars.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Curry",
+        "theme": "FOOD",
+        "hint": "A dish popular in South Asian cuisine, known for its spices.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Sushi",
+        "theme": "FOOD",
+        "hint": "A Japanese dish made with rice and seafood.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Chromosome",
+        "theme": "BIOLOGY",
+        "hint": "A structure of nucleic acids carrying genetic information.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Quantum",
+        "theme": "SCIENCE",
+        "hint": "A branch of physics dealing with atomic and subatomic particles.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Lasagna",
+        "theme": "FOOD",
+        "hint": "An Italian dish with layers of pasta, cheese, and meat.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Giraffe",
+        "theme": "ANIMALS",
+        "hint": "The tallest land animal with a long neck.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Baguette",
+        "theme": "FOOD",
+        "hint": "A long, narrow loaf of French bread.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Enzyme",
+        "theme": "BIOLOGY",
+        "hint": "A protein that accelerates chemical reactions in the body.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "DNA",
+        "theme": "BIOLOGY",
+        "hint": "The molecule that carries genetic instructions.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Dolphin",
+        "theme": "ANIMALS",
+        "hint": "A highly intelligent marine mammal.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Orbit",
+        "theme": "SCIENCE",
+        "hint": "The path of a celestial body around another.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Elephant",
+        "theme": "ANIMALS",
+        "hint": "The largest land animal with a trunk.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Voltage",
+        "theme": "SCIENCE",
+        "hint": "The electric potential difference between two points.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Taco",
+        "theme": "FOOD",
+        "hint": "A Mexican dish with a folded or rolled tortilla.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Mitochondria",
+        "theme": "BIOLOGY",
+        "hint": "The powerhouse of the cell.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Octopus",
+        "theme": "ANIMALS",
+        "hint": "A marine animal with eight arms.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Crusade",
+        "theme": "HISTORY",
+        "hint": "A religious war in medieval times.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Viking",
+        "theme": "HISTORY",
+        "hint": "A Scandinavian explorer and raider.",
+        "difficulty": {
+            "name": "medium",
+            "level": 2
+        }
+    },
+    {
+        "content": "Relativity",
+        "theme": "SCIENCE",
+        "hint": "Einstein's theory that space and time are interwoven.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Apoptosis",
+        "theme": "BIOLOGY",
+        "hint": "The process of programmed cell death.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Bouillabaisse",
+        "theme": "FOOD",
+        "hint": "A traditional Provençal fish stew originating from France.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Orangutan",
+        "theme": "ANIMALS",
+        "hint": "A great ape found in the rainforests of Borneo and Sumatra.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Photon",
+        "theme": "SCIENCE",
+        "hint": "A quantum of light or other electromagnetic radiation.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Tiramisu",
+        "theme": "FOOD",
+        "hint": "An Italian dessert made with coffee, cheese, and cocoa.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Hemoglobin",
+        "theme": "BIOLOGY",
+        "hint": "The protein in red blood cells that carries oxygen.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Guillotine",
+        "theme": "HISTORY",
+        "hint": "A device used for executions during the French Revolution.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Absolutism",
+        "theme": "HISTORY",
+        "hint": "A political system where the monarch holds total power.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Entanglement",
+        "theme": "SCIENCE",
+        "hint": "A quantum phenomenon where particles remain interconnected.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Paella",
+        "theme": "FOOD",
+        "hint": "A Spanish rice dish originally from Valencia.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Axolotl",
+        "theme": "ANIMALS",
+        "hint": "A type of salamander known for its regenerative abilities.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Thermodynamics",
+        "theme": "SCIENCE",
+        "hint": "The study of heat and energy transfer.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Chameleon",
+        "theme": "ANIMALS",
+        "hint": "A lizard known for changing its skin color.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Casumartzu",
+        "theme": "FOOD",
+        "hint": "Traditional Sardinian sheep milk cheese.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Platypus",
+        "theme": "ANIMALS",
+        "hint": "An egg-laying mammal native to Australia.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Homeostasis",
+        "theme": "BIOLOGY",
+        "hint": "The process of maintaining a stable internal environment.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Kimchi",
+        "theme": "FOOD",
+        "hint": "A traditional Korean dish of fermented vegetables.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Synapse",
+        "theme": "BIOLOGY",
+        "hint": "The junction between two neurons where signals are transmitted.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Fission",
+        "theme": "SCIENCE",
+        "hint": "The splitting of an atomic nucleus, releasing energy.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Cytoplasm",
+        "theme": "BIOLOGY",
+        "hint": "The material within a cell, excluding the nucleus.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    },
+    {
+        "content": "Narwhal",
+        "theme": "ANIMALS",
+        "hint": "A marine mammal known as the 'unicorn of the sea' due to its long tusk.",
+        "difficulty": {
+            "name": "hard",
+            "level": 3
+        }
+    }
+]
