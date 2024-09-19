@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import static backend.academy.config.GameConfig.CUSTOM_WORD_FILE_LOCATION;
+import static backend.academy.config.GameConfig.STAGES;
 import static backend.academy.utils.GameUtils.readCommand;
 import static backend.academy.utils.GameUtils.readWord;
 
@@ -46,11 +47,11 @@ public final class WordListBuilder {
             gameContext.inputReader(),
             gameContext.outputWriter(),
             false);
-        gameContext.outputWriter().println("Enter word difficulty level (0-20):");
+        gameContext.outputWriter().printf("Enter word difficulty level (0-%s):", STAGES);
         int difficultyLevel = readCommand(
             gameContext.inputReader(),
             gameContext.outputWriter(),
-            0, 20);
+            0, STAGES);
 
         Word newWord = new Word(content, theme, hint, new Difficulty(difficultyName, difficultyLevel));
         words.add(newWord);
