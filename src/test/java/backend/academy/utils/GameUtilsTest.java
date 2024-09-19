@@ -12,6 +12,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import static backend.academy.config.GameConfig.EXIT_COMMAND;
 import static backend.academy.config.GameConfig.HELP_COMMAND;
+import static backend.academy.utils.GameUtils.pickRandomObject;
+import static backend.academy.utils.GameUtils.readCommand;
+import static backend.academy.utils.GameUtils.readLetter;
+import static backend.academy.utils.GameUtils.readWord;
 import static backend.academy.utils.GraphicUtils.INPUT_NOT_RECOGNIZED;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,10 +34,10 @@ class GameUtilsTest {
              BufferedReader correctHelp = new BufferedReader(new StringReader("HeLP\n"));
              BufferedReader correctExit = new BufferedReader(new StringReader("   ExiT \n"))) {
 
-            String correctLetterResult = GameUtils.readLetter(correctLetter, outputWriter);
-            String correctLetterLowerCaseResult = GameUtils.readLetter(correctLetterLowerCase, outputWriter);
-            String correctHelpResult = GameUtils.readLetter(correctHelp, outputWriter);
-            String correctExitResult = GameUtils.readLetter(correctExit, outputWriter);
+            String correctLetterResult = readLetter(correctLetter, outputWriter);
+            String correctLetterLowerCaseResult = readLetter(correctLetterLowerCase, outputWriter);
+            String correctHelpResult = readLetter(correctHelp, outputWriter);
+            String correctExitResult = readLetter(correctExit, outputWriter);
 
             assertEquals("A", correctLetterResult);
             assertEquals("A", correctLetterLowerCaseResult);
@@ -47,8 +51,8 @@ class GameUtilsTest {
         try (BufferedReader incorrectInputLetters = new BufferedReader(new StringReader("aaa\nAP\ny"));
              BufferedReader incorrectInputOther = new BufferedReader(new StringReader("%\nHeLp"))) {
 
-            String incorrectInputLettersResult = GameUtils.readLetter(incorrectInputLetters, outputWriter);
-            String incorrectInputOtherResult = GameUtils.readLetter(incorrectInputOther, outputWriter);
+            String incorrectInputLettersResult = readLetter(incorrectInputLetters, outputWriter);
+            String incorrectInputOtherResult = readLetter(incorrectInputOther, outputWriter);
 
             assertEquals(incorrectInputLettersResult, "Y");
             assertEquals(incorrectInputOtherResult, "help");
@@ -61,9 +65,9 @@ class GameUtilsTest {
              BufferedReader validInputLowerBound = new BufferedReader(new StringReader("1\n"));
              BufferedReader validInputUpperBound = new BufferedReader(new StringReader("10\n"))) {
 
-            Integer resultInRange = GameUtils.readCommand(validInputInRange, outputWriter, 1, 10);
-            Integer resultLowerBound = GameUtils.readCommand(validInputLowerBound, outputWriter, 1, 10);
-            Integer resultUpperBound = GameUtils.readCommand(validInputUpperBound, outputWriter, 1, 10);
+            Integer resultInRange = readCommand(validInputInRange, outputWriter, 1, 10);
+            Integer resultLowerBound = readCommand(validInputLowerBound, outputWriter, 1, 10);
+            Integer resultUpperBound = readCommand(validInputUpperBound, outputWriter, 1, 10);
 
             assertEquals(Integer.valueOf(5), resultInRange);
             assertEquals(Integer.valueOf(1), resultLowerBound);
@@ -76,8 +80,8 @@ class GameUtilsTest {
         try (BufferedReader invalidInputNonNumeric = new BufferedReader(new StringReader("abc\n12\n2"));
              BufferedReader invalidInputOutOfRange = new BufferedReader(new StringReader("15\n7\n"))) {
 
-            Integer resultNonNumeric = GameUtils.readCommand(invalidInputNonNumeric, outputWriter, 1, 10);
-            Integer resultOutOfRange = GameUtils.readCommand(invalidInputOutOfRange, outputWriter, 1, 10);
+            Integer resultNonNumeric = readCommand(invalidInputNonNumeric, outputWriter, 1, 10);
+            Integer resultOutOfRange = readCommand(invalidInputOutOfRange, outputWriter, 1, 10);
 
             assertEquals(Integer.valueOf(2), resultNonNumeric);
             assertEquals(Integer.valueOf(7), resultOutOfRange);
@@ -86,15 +90,48 @@ class GameUtilsTest {
     }
 
     @Test
+    void readWordValidInput() throws IOException {
+        try (BufferedReader correctWordLower = new BufferedReader(new StringReader("hello\n"));
+             BufferedReader correctWordUpper = new BufferedReader(new StringReader("WORLD\n"));
+             BufferedReader correctWordWithSpaces = new BufferedReader(new StringReader("   test   \n"))) {
+
+            String resultLower = readWord(correctWordLower, outputWriter, true);
+            String resultUpper = readWord(correctWordUpper, outputWriter, true);
+            String resultWithSpaces = readWord(correctWordWithSpaces, outputWriter, true);
+
+            assertEquals("hello", resultLower);
+            assertEquals("world", resultUpper);
+            assertEquals("test", resultWithSpaces);
+        }
+    }
+
+    @Test
+    void readWordInvalidInput() throws IOException {
+        try (BufferedReader invalidWordNumbers = new BufferedReader(new StringReader("12345\nhello\n"));
+             BufferedReader invalidWordSymbols = new BufferedReader(new StringReader("@hello!\nWORLD\n"));
+             BufferedReader invalidWordMix = new BufferedReader(new StringReader("hello123\n   test   \n"))) {
+
+            String resultInvalidNumbers = readWord(invalidWordNumbers, outputWriter, false);
+            String resultInvalidSymbols = readWord(invalidWordSymbols, outputWriter, false);
+            String resultInvalidMix = readWord(invalidWordMix, outputWriter, false);
+
+            assertTrue(outputStream.toString().contains(INPUT_NOT_RECOGNIZED));
+            assertEquals("hello", resultInvalidNumbers);
+            assertEquals("world", resultInvalidSymbols);
+            assertEquals("test", resultInvalidMix);
+        }
+    }
+
+    @Test
     void pickRandomObjectTest() {
         String[] oneElement = {""};
         Set<Word> words = Instancio.createSet(Word.class);
-        Word word = GameUtils.pickRandomObject(words);
+        Word word = pickRandomObject(words);
 
-        assertThatThrownBy(() -> GameUtils.pickRandomObject(new String[0]))
+        assertThatThrownBy(() -> pickRandomObject(new String[0]))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("No random element in the empty array");
-        assertEquals("", GameUtils.pickRandomObject(oneElement));
+        assertEquals("", pickRandomObject(oneElement));
         assertTrue(words.contains(word));
     }
 
