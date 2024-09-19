@@ -29,17 +29,7 @@ public record Difficulty(String name, int level) implements Comparable<Difficult
 
     @Override
     public int compareTo(Difficulty dif) {
-        return switch (this.name.toLowerCase()) {
-            case "easy" -> -1;
-            case "medium" -> switch (dif.name) {
-                case "easy" -> 1;
-                default -> -1;
-            };
-            case "hard" -> switch (dif.name) {
-                case "easy", "medium" -> 1;
-                default -> -1;
-            };
-            default -> Integer.compare(this.level, dif.level);
-        };
+        return Integer.compare(this.level, dif.level);
     }
 }
+
