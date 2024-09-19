@@ -1,6 +1,5 @@
 package backend.academy.utils;
 
-import backend.academy.config.GameConfig;
 import backend.academy.data.Word;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -8,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.StringReader;
 import java.util.Set;
+import org.instancio.Instancio;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import static backend.academy.config.GameConfig.EXIT_COMMAND;
@@ -88,7 +88,7 @@ class GameUtilsTest {
     @Test
     void pickRandomObjectTest() {
         String[] oneElement = {""};
-        Set<Word> words = GameConfig.wordsList;
+        Set<Word> words = Instancio.createSet(Word.class);
         Word word = GameUtils.pickRandomObject(words);
 
         assertThatThrownBy(() -> GameUtils.pickRandomObject(new String[0]))

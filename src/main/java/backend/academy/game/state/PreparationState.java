@@ -2,21 +2,21 @@ package backend.academy.game.state;
 
 import backend.academy.data.Difficulty;
 import backend.academy.data.Word;
+import backend.academy.exception.NoWordsWithParametersException;
 import backend.academy.game.GameContext;
+import backend.academy.repo.SimpleWordRepository;
+import backend.academy.repo.WordRepository;
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import static backend.academy.config.GameConfig.CUSTOM_WORD_FILE_LOCATION;
-import static backend.academy.config.GameConfig.globalDifficulties;
-import static backend.academy.config.GameConfig.globalThemes;
-import static backend.academy.config.GameConfig.wordsList;
-import static backend.academy.utils.FileParser.addWordsFromJson;
+import static backend.academy.config.GameConfig.NO_WORD_TEXT;
+import static backend.academy.config.GameConfig.WORD_FILE_LOCATION;
 import static backend.academy.utils.FileParser.getJsonInDir;
-import static backend.academy.utils.GameUtils.pickRandomObject;
+import static backend.academy.utils.FileParser.parseJsonToWordList;
 import static backend.academy.utils.GameUtils.readCommand;
 import static backend.academy.utils.GraphicUtils.HANGMAN_PREVIEW;
 import static backend.academy.utils.GraphicUtils.MAIN_MENU;
@@ -24,12 +24,37 @@ import static backend.academy.utils.GraphicUtils.clearScreen;
 import static backend.academy.utils.GraphicUtils.getCustomMenu;
 
 @Log4j2
-@NoArgsConstructor
+@RequiredArgsConstructor
 @SuppressWarnings({"MagicNumber", "MultipleStringLiterals", "PATH_TRAVERSAL_IN"})
 public class PreparationState implements GameState {
-    private List<String> localThemes = globalThemes;
 
-    private List<Difficulty> localDifficulties = globalDifficulties;
+    private final WordRepository wordRepository;
+
+    private List<String> localThemes;
+
+    private List<Difficulty> localDifficulties;
+
+    private boolean noWordError = false;
+
+    public PreparationState() {
+        this.wordRepository = new SimpleWordRepository(parseJsonToWordList(new File(WORD_FILE_LOCATION)));
+    }
+
+    public void loadContext(GameContext gameContext) {
+        try {
+            updateLocalContext();
+            gameContext.difficulty(wordRepository.getRandomDifficulty());
+            gameContext.theme(wordRepository.getRandomTheme());
+        } catch (NoWordsWithParametersException e) {
+            noWordError = true;
+        }
+        gameCycle(gameContext);
+    }
+
+    private void updateLocalContext() throws NoWordsWithParametersException {
+        localThemes = wordRepository.getThemes();
+        localDifficulties = wordRepository.getDifficulties();
+    }
 
     @Override
     public void gameCycle(GameContext gameContext) {
@@ -37,16 +62,16 @@ public class PreparationState implements GameState {
             return;
         }
 
-        if (localDifficulties.isEmpty() || localThemes.isEmpty()) {
-            log.warn("No words available for chosen theme or difficulty {}, {}",
-                gameContext.theme(), gameContext.difficulty());
-            localThemes = globalThemes;
-            localDifficulties = globalDifficulties;
-        }
-
         clearScreen(gameContext.outputWriter());
         gameContext.outputWriter().print(HANGMAN_PREVIEW);
-        gameContext.outputWriter().print(MAIN_MENU);
+        gameContext.outputWriter().print(MAIN_MENU
+            .formatted(gameContext.theme(), gameContext.difficulty().toString())
+        );
+
+        if (noWordError) {
+            gameContext.outputWriter().println(NO_WORD_TEXT);
+            noWordError = false;
+        }
 
         log.info("Menu Loaded");
         int mainMenuChoice = readCommand(
@@ -80,12 +105,6 @@ public class PreparationState implements GameState {
         gameContext.theme(theme);
         log.info("Theme {} chosen.", theme);
 
-        localDifficulties = wordsList.stream()
-            .filter(word -> word.theme().equalsIgnoreCase(theme))
-            .map(Word::difficulty)
-            .distinct()
-            .toList();
-
         gameCycle(gameContext);
     }
 
@@ -107,18 +126,12 @@ public class PreparationState implements GameState {
         gameContext.difficulty(difficulty);
         log.info("Difficulty {} chosen.", difficulty);
 
-        localThemes = wordsList.stream()
-            .filter(word -> word.difficulty().equals(difficulty))
-            .map(Word::theme)
-            .distinct()
-            .toList();
-
         gameCycle(gameContext);
     }
 
     private void loadCustomWordsSelector(GameContext gameContext) {
         String[] customWords = getJsonInDir(CUSTOM_WORD_FILE_LOCATION);
-        String customWordsMenu = "custom wordlist (path: %s):".formatted(CUSTOM_WORD_FILE_LOCATION);
+        String customWordsMenu = "custom wordlist (path: %s)".formatted(CUSTOM_WORD_FILE_LOCATION);
         gameContext.outputWriter().println(getCustomMenu(
             Arrays.stream(customWords).toList(),
             customWordsMenu));
@@ -133,23 +146,18 @@ public class PreparationState implements GameState {
         }
 
         String chosenPath = CUSTOM_WORD_FILE_LOCATION + customWords[customWordsMenuChoice - 1];
-        addWordsFromJson(chosenPath);
+        log.info("Adding words from JSON file: {}", chosenPath);
 
-        localThemes = globalThemes;
-        localDifficulties = globalDifficulties;
+        File json = new File(chosenPath);
+        List<Word> newWords = parseJsonToWordList(json);
+        try {
+            wordRepository.addWords(newWords);
+            updateLocalContext();
+        } catch (NoWordsWithParametersException e) {
+            noWordError = true;
+        }
 
-        log.info("Custom words path {} chosen.", chosenPath);
         gameCycle(gameContext);
-    }
-
-    private Word selectRandomWord(GameContext gameContext) {
-        Set<Word> wordlist =
-            wordsList.stream()
-                .filter(word -> word.theme().equalsIgnoreCase(gameContext.theme()))
-                .filter(word -> word.difficulty().equals(gameContext.difficulty()))
-                .collect(Collectors.toSet());
-        log.info("All words filtered by theme and difficulty: {}", wordlist);
-        return pickRandomObject(wordlist);
     }
 
     @Override
@@ -158,11 +166,18 @@ public class PreparationState implements GameState {
             gameContext.difficulty(),
             gameContext.theme());
 
-        gameContext.word(
-            selectRandomWord(gameContext));
+        try {
+            gameContext.word(wordRepository.getRandomWordByThemeAndDifficulty(
+                gameContext.theme(), gameContext.difficulty()
+            ));
+        } catch (NoWordsWithParametersException e) {
+            noWordError = true;
+            gameCycle(gameContext);
+            return;
+        }
 
-        log.info("Game configured. Difficulty: {}. Theme: {}. Word: {}",
-            gameContext.difficulty(), gameContext.theme(),
+        log.info("Game configured. Difficulty: {} {}. Theme: {}. Word: {}",
+            gameContext.difficulty(), gameContext.difficulty().level(), gameContext.theme(),
             gameContext.word());
 
         String[] emptyWordArray = new String[gameContext.word().length()];

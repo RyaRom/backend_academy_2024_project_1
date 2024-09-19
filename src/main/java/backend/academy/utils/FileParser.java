@@ -7,39 +7,12 @@ import java.io.File;
 import java.util.List;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
-import static backend.academy.config.GameConfig.WORD_FILE_LOCATION;
-import static backend.academy.config.GameConfig.globalDifficulties;
-import static backend.academy.config.GameConfig.globalThemes;
-import static backend.academy.config.GameConfig.wordsList;
 
 @Log4j2
 @UtilityClass
 public class FileParser {
     private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
 
-    public static final List<Word> DEFAULT_WORD_CONFIG = parseJsonToWordList(
-        new File(WORD_FILE_LOCATION));
-
-    public static void addWordsFromJson(String path) {
-        File json = new File(path);
-        List<Word> config = parseJsonToWordList(json);
-
-        log.info("Adding words from JSON file: {}", config);
-
-        wordsList.addAll(config);
-
-        globalDifficulties = wordsList.stream()
-            .map(Word::difficulty)
-            .distinct()
-            .toList();
-
-        globalThemes = wordsList.stream()
-            .map(Word::theme)
-            .distinct()
-            .toList();
-    }
-
-    //Generic types are leading to ClassCastException here
     public static List<Word> parseJsonToWordList(File json) {
         try {
             TypeReference<List<Word>> typeRef = new TypeReference<>() {

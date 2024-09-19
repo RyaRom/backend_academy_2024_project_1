@@ -27,7 +27,7 @@ class GameProgressAndFinishingTest {
 
     private final Difficulty difficulty = new Difficulty("easy", 1);
 
-    private final Word word = new Word("Sun", "Science", "The star at the center of our solar system.", difficulty);
+    private final Word word = new Word("Sun", "Science", "", difficulty);
 
     private ByteArrayOutputStream outputStream;
 
@@ -118,7 +118,6 @@ class GameProgressAndFinishingTest {
 
     @Test
     void sameLetterIncorrect() {
-        gameContext.difficulty(new Difficulty("hard", 3));
         gameInput = new BufferedReader(new StringReader("w\nw\nw\nw\nw\nw\nw\nw\nw\nw\n2\nexit"));
         gameContext.inputReader(gameInput);
 
@@ -126,8 +125,8 @@ class GameProgressAndFinishingTest {
         String output = outputStream.toString();
 
         assertTrue(output.contains(GAME_STAGES[0]));
-        assertFalse(output.contains(GAME_STAGES[1]));
-        assertTrue(output.contains(GAME_STAGES[3]));
+        assertTrue(output.contains(GAME_STAGES[1]));
+        assertFalse(output.contains(GAME_STAGES[3]));
         assertFalse(output.contains(GAME_STAGES[6]));
         assertFalse(output.contains(GAME_STAGES[9]));
         assertFalse(output.contains(GAME_STAGES[12]));

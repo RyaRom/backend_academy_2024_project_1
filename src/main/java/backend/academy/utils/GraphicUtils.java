@@ -196,8 +196,8 @@ public class GraphicUtils {
 
     public static final String MAIN_MENU = String.join(System.lineSeparator(),
         "1. Play Game",
-        "2. Select Theme",
-        "3. Select Difficulty",
+        "2. Select Theme                                            Selected theme: %s",
+        "3. Select Difficulty                                       Selected difficulty: %s",
         "4. Exit",
         "5. Add custom words",
         "Enter your choice: "

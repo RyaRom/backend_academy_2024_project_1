@@ -1,6 +1,5 @@
 package backend.academy.game.state;
 
-import backend.academy.data.Difficulty;
 import backend.academy.game.GameContext;
 import java.util.Arrays;
 import java.util.Locale;
@@ -14,7 +13,6 @@ import static backend.academy.config.GameConfig.EMPTY_HINT_TEXTS;
 import static backend.academy.config.GameConfig.EXIT_COMMAND;
 import static backend.academy.config.GameConfig.HELP_COMMAND;
 import static backend.academy.config.GameConfig.STAGES;
-import static backend.academy.config.GameConfig.globalDifficulties;
 import static backend.academy.utils.GameUtils.pickRandomObject;
 import static backend.academy.utils.GameUtils.readLetter;
 import static backend.academy.utils.GraphicUtils.GAME_STAGES;
@@ -97,11 +95,9 @@ public class InProgressState implements GameState {
         if (!wrongLetters.add(letter)) {
             return;
         }
-        int step = globalDifficulties.stream()
-            .filter(dif -> gameContext.difficulty().equals(dif))
-            .map(Difficulty::level)
-            .findAny()
-            .orElseThrow(() -> new IllegalArgumentException("No such difficulty"));
+        int step = gameContext.word()
+            .difficulty()
+            .level();
 
         gameStage += step;
     }

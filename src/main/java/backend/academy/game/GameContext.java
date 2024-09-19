@@ -11,9 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
-import static backend.academy.config.GameConfig.globalDifficulties;
-import static backend.academy.config.GameConfig.globalThemes;
-import static backend.academy.utils.GameUtils.pickRandomObject;
 
 @Getter
 @Setter
@@ -24,9 +21,9 @@ public class GameContext {
 
     private GameState state = new PreparationState();
 
-    private Difficulty difficulty = pickRandomObject(globalDifficulties);
+    private Difficulty difficulty;
 
-    private String theme = pickRandomObject(globalThemes);
+    private String theme;
 
     private Word word;
 
@@ -35,13 +32,13 @@ public class GameContext {
     private PrintStream outputWriter;
 
     public void init(BufferedReader inputReader, PrintStream outputWriter) {
-        if (globalThemes.isEmpty() || globalDifficulties.isEmpty()) {
-            throw new IllegalStateException("No themes or difficulties found in wordlist");
-        }
-
         this.inputReader = inputReader;
         this.outputWriter = outputWriter;
-        state.gameCycle(this);
+        if (state instanceof PreparationState) {
+            ((PreparationState) state).loadContext(this);
+        } else {
+            throw new IllegalStateException();
+        }
     }
 
     public void finish() {
