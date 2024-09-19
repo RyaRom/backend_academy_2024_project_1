@@ -4,6 +4,7 @@ import backend.academy.data.Difficulty;
 import backend.academy.data.Word;
 import backend.academy.exception.NoWordsWithParametersException;
 import backend.academy.game.GameContext;
+import backend.academy.game.WordListBuilder;
 import backend.academy.repo.SimpleWordRepository;
 import backend.academy.repo.WordRepository;
 import java.io.File;
@@ -77,15 +78,51 @@ public class PreparationState implements GameState {
         int mainMenuChoice = readCommand(
             gameContext.inputReader(),
             gameContext.outputWriter(),
-            1, 5);
+            1, 6);
         switch (mainMenuChoice) {
             case 1 -> nextState(gameContext);
             case 2 -> loadThemeSelector(gameContext);
             case 3 -> loadDifficultySelector(gameContext);
             case 4 -> gameContext.finish();
             case 5 -> loadCustomWordsSelector(gameContext);
+            case 6 -> {
+                WordListBuilder wordList = new WordListBuilder();
+                loadWordlistCreation(gameContext, wordList);
+            }
             default -> throw new IllegalStateException("Unexpected value: " + mainMenuChoice);
         }
+    }
+
+    private void loadWordlistCreation(GameContext gameContext, WordListBuilder wordList) {
+        String menu = getCustomMenu(
+            List.of("Set name", "Add word", "Save"),
+            "option");
+        gameContext.outputWriter().print(menu);
+        int themeMenuChoice = readCommand(
+            gameContext.inputReader(),
+            gameContext.outputWriter(),
+            0, 3);
+
+        if (themeMenuChoice == 0) {
+            gameCycle(gameContext);
+            return;
+        }
+
+        switch (themeMenuChoice) {
+            case 1 -> {
+                wordList.changeName(gameContext);
+                loadWordlistCreation(gameContext, wordList);
+            }
+            case 2 -> {
+                wordList.createWord(gameContext);
+                loadWordlistCreation(gameContext, wordList);
+            }
+            case 3 -> wordList.save();
+            default -> throw new IllegalStateException("Unexpected value: " + themeMenuChoice);
+        }
+        log.info("Wordlist {} created", wordList);
+
+        gameCycle(gameContext);
     }
 
     private void loadThemeSelector(GameContext gameContext) {

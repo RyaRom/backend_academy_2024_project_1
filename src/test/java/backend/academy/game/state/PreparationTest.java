@@ -2,7 +2,6 @@ package backend.academy.game.state;
 
 import backend.academy.data.Difficulty;
 import backend.academy.data.Word;
-import backend.academy.exception.NoWordsWithParametersException;
 import backend.academy.game.GameContext;
 import backend.academy.repo.SimpleWordRepository;
 import java.io.BufferedReader;

@@ -200,6 +200,7 @@ public class GraphicUtils {
         "3. Select Difficulty                                       Selected difficulty: %s",
         "4. Exit",
         "5. Add custom words",
+        "6. Create new wordlist",
         "Enter your choice: "
     );
 

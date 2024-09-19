@@ -31,4 +31,13 @@ public class FileParser {
         }
         return src.list((f, name) -> name.toLowerCase().endsWith(".json"));
     }
+
+    public static void saveWordlistToFile(List<Word> wordList, File json) {
+        try {
+            JSON_MAPPER.writeValue(json, wordList);
+        } catch (Exception e) {
+            log.error("Error saving word list to file", e);
+            throw new RuntimeException(e);
+        }
+    }
 }

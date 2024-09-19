@@ -41,7 +41,11 @@ public class GameUtils {
         return pickRandomObject(objects.stream().toList());
     }
 
-    @SneakyThrows public static String readLetter(BufferedReader inputReader, PrintStream outputWriter) {
+    @SneakyThrows
+    public static String readLetter(
+        BufferedReader inputReader,
+        PrintStream outputWriter
+    ) {
         while (true) {
             String input = inputReader.readLine();
             if (input == null) {
@@ -58,7 +62,30 @@ public class GameUtils {
         }
     }
 
-    @SneakyThrows public static Integer readCommand(
+    @SneakyThrows
+    public static String readWord(
+        BufferedReader inputReader,
+        PrintStream outputWriter,
+        boolean emptyMode
+    ) {
+        while (true) {
+            String input = inputReader.readLine();
+            if (input == null) {
+                continue;
+            }
+            input = input.toLowerCase(Locale.ROOT).trim();
+            if (emptyMode && input.matches("[a-z]*")) {
+                return input;
+            } else if (input.matches("[a-z]+")) {
+                return input;
+            } else {
+                outputWriter.print(INPUT_NOT_RECOGNIZED);
+            }
+        }
+    }
+
+    @SneakyThrows
+    public static Integer readCommand(
         BufferedReader inputReader,
         PrintStream outputWriter,
         int lowerBound,
