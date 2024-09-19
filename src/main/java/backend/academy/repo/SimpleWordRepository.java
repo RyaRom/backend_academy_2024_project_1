@@ -25,7 +25,6 @@ public class SimpleWordRepository implements WordRepository {
             words.stream()
                 .map(Word::difficulty)
                 .distinct()
-                .sorted(Difficulty::compareTo)
                 .toList());
         this.words = new HashSet<>(words);
         updateThemesAndDifficulties();
@@ -106,7 +105,13 @@ public class SimpleWordRepository implements WordRepository {
 
     @Override
     public void addWords(List<Word> newWords) throws NoWordsWithParametersException {
-        removeDifficultiesDuplicationsFromWords(newWords, getDifficulties());
+        var dif = getDifficulties();
+        dif.addAll(newWords.stream()
+            .map(Word::difficulty)
+            .distinct()
+            .sorted(Difficulty::compareTo)
+            .toList());
+        removeDifficultiesDuplicationsFromWords(newWords, dif);
 
         words.addAll(newWords);
         updateThemesAndDifficulties();
