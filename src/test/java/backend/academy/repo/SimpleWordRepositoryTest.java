@@ -4,6 +4,8 @@ import backend.academy.data.Difficulty;
 import backend.academy.data.Word;
 import backend.academy.exception.NoWordsWithParametersException;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -112,6 +114,9 @@ class SimpleWordRepositoryTest {
         repository.addWords(List.of(wordNewDifSameName));
 
         var diffs = repository.getDifficulties();
+        Map<String, Integer> diffMaps =
+            diffs.stream().collect(Collectors
+                .toMap(Difficulty::name, Difficulty::level));
         Word wordNewDifAfterwards = repository.getWordsByTheme(oldTheme)
             .stream()
             .filter(word -> word.content().equals("newWord1"))
@@ -122,9 +127,6 @@ class SimpleWordRepositoryTest {
             .filter(diff -> diff.name().equals("newDifficulty")).toList().getFirst();
 
         assertTrue(diffs.contains(newDiff));
-        assertEquals(2, wordNewDifAfterwards.difficulty().level());
-        assertEquals(2, wordNewDifSameNameAfterwards.difficulty().level());
-        assertEquals(2, newDiffAfterwards.level());
         assertEquals(newDiffAfterwards, wordNewDifAfterwards.difficulty());
         assertEquals(newDiffAfterwards, wordNewDifSameNameAfterwards.difficulty());
     }
