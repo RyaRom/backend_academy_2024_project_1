@@ -3,7 +3,6 @@ package backend.academy.repo;
 import backend.academy.data.Difficulty;
 import backend.academy.data.Word;
 import backend.academy.exception.NoWordsWithParametersException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -22,6 +21,12 @@ public class SimpleWordRepository implements WordRepository {
     private List<Difficulty> difficulties;
 
     public SimpleWordRepository(List<Word> words) {
+        removeDifficultiesDuplicationsFromWords(words,
+            words.stream()
+                .map(Word::difficulty)
+                .distinct()
+                .sorted(Difficulty::compareTo)
+                .toList());
         this.words = new HashSet<>(words);
         updateThemesAndDifficulties();
     }
@@ -101,29 +106,33 @@ public class SimpleWordRepository implements WordRepository {
 
     @Override
     public void addWords(List<Word> newWords) throws NoWordsWithParametersException {
-        var newWordsMutable = new ArrayList<>(newWords);
+        removeDifficultiesDuplicationsFromWords(newWords, getDifficulties());
+
+        words.addAll(newWords);
+        updateThemesAndDifficulties();
+        validateThemesAndDifficulties();
+    }
+
+    private void removeDifficultiesDuplicationsFromWords(List<Word> words, List<Difficulty> difficulties) {
         Map<String, Integer> difficultySet = difficulties
             .stream()
             .collect(Collectors.toMap(Difficulty::name, Difficulty::level));
 
         //replace all themes with existing names to old ones
-        for (int i = 0; i < newWordsMutable.size(); i++) {
-            Word word = newWordsMutable.get(i);
+        for (int i = 0; i < words.size(); i++) {
+            Word word = words.get(i);
             var difficulty = word.difficulty();
             int previousLevel = difficultySet.getOrDefault(difficulty.name(), difficulty.level());
             if (previousLevel != difficulty.level()) {
                 var newDif = new Difficulty(difficulty.name(), previousLevel);
-                newWordsMutable.set(i, new Word(
+                words.set(i, new Word(
                     word.content(),
                     word.theme(),
                     word.hint(),
                     newDif));
+            } else {
+                difficultySet.put(difficulty.name(), difficulty.level());
             }
         }
-
-        words.addAll(newWordsMutable);
-        updateThemesAndDifficulties();
-        validateThemesAndDifficulties();
     }
-
 }

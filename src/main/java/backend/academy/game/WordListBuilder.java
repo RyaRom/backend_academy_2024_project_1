@@ -66,6 +66,10 @@ public final class WordListBuilder {
     }
 
     public void save() {
+        if (words.isEmpty()) {
+            return;
+        }
+
         File newJson = new File(
             CUSTOM_WORD_FILE_LOCATION
                 + name + "_wordlist.json"
