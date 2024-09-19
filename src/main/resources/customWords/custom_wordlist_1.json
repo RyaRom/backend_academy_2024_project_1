@@ -4,8 +4,8 @@
         "theme": "UNKNOWN",
         "hint": "",
         "difficulty": {
-            "name": "impossible",
-            "level": 5
+            "name": "easy",
+            "level": -5
         }
     }
 ]

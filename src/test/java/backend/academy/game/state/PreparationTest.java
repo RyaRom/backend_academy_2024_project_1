@@ -93,7 +93,7 @@ class PreparationTest {
 
     @Test
     void noWordsWithThemeDifficulty()
-        throws NoSuchFieldException, IllegalAccessException, NoWordsWithParametersException {
+        throws NoSuchFieldException, IllegalAccessException {
         var words = Instancio.createList(Word.class);
         var repo = new SimpleWordRepository(words);
         startGame = new BufferedReader(new StringReader("1\n4"));

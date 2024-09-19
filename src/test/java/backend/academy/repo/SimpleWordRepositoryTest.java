@@ -19,7 +19,7 @@ class SimpleWordRepositoryTest {
     private WordRepository repository;
 
     @BeforeEach
-    void setUp() throws NoWordsWithParametersException {
+    void setUp() {
         words = Instancio.createList(Word.class);
         repository = new SimpleWordRepository(words);
     }
