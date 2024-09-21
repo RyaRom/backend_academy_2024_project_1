@@ -20,6 +20,8 @@ public class GameConfig {
 
     public static final Integer STAGES = 12;
 
+    public static final Integer WORD_MAX_LEN = 50;
+
     public static final String[] EMPTY_HINT_TEXTS =
         {"Waiting for something to happen?", "Nothing is here", "No help for you"};
 }
