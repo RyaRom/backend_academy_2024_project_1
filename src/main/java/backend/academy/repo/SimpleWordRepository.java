@@ -10,13 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import static backend.academy.utils.GameUtils.pickRandomObject;
 
+@Log4j2
 public class SimpleWordRepository implements WordRepository {
-    private static final Logger log = LoggerFactory.getLogger(SimpleWordRepository.class);
-
     private final Set<Word> words;
 
     private final Map<String, Set<Word>> wordsByTheme = new HashMap<>();
@@ -51,17 +49,17 @@ public class SimpleWordRepository implements WordRepository {
     private void removeDuplicateNameDifficulties() {
         log.info("words before cleaning {}",
             words.stream().map(w -> w.difficulty().level()).toList());
-        Map<String, Integer> difficulties = new HashMap<>();
+        Map<String, Integer> difficultiesMap = new HashMap<>();
         List<Word> wordList = new ArrayList<>(words);
         for (Word word : wordList) {
             Difficulty difficulty = word.difficulty();
-            difficulties.putIfAbsent(
+            difficultiesMap.putIfAbsent(
                 difficulty.name(),
                 difficulty.level());
 
             Difficulty oldDif = Difficulty.builder()
                 .name(difficulty.name())
-                .level(difficulties.get(difficulty.name()))
+                .level(difficultiesMap.get(difficulty.name()))
                 .build();
 
             if (oldDif.level() != difficulty.level()) {
