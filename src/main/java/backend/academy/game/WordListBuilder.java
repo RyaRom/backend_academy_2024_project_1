@@ -3,6 +3,7 @@ package backend.academy.game;
 import backend.academy.data.Difficulty;
 import backend.academy.data.Word;
 import backend.academy.utils.FileParser;
+import backend.academy.utils.GameUtils;
 import java.io.File;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -31,22 +32,22 @@ public final class WordListBuilder {
         String content = readWord(
             gameContext.inputReader(),
             gameContext.outputWriter(),
-            false);
+            GameUtils.ReadWordMode.WORD);
         gameContext.outputWriter().println("Enter word theme:");
         String theme = readWord(
             gameContext.inputReader(),
             gameContext.outputWriter(),
-            false);
+            GameUtils.ReadWordMode.DESCRIPTION);
         gameContext.outputWriter().println("Enter word hint:");
         String hint = readWord(
             gameContext.inputReader(),
             gameContext.outputWriter(),
-            true);
+            GameUtils.ReadWordMode.HINT);
         gameContext.outputWriter().println("Enter word difficulty name:");
         String difficultyName = readWord(
             gameContext.inputReader(),
             gameContext.outputWriter(),
-            false);
+            GameUtils.ReadWordMode.DESCRIPTION);
         gameContext.outputWriter().printf("Enter word difficulty level (0-%s):", STAGES);
         int difficultyLevel = readCommand(
             gameContext.inputReader(),
@@ -62,7 +63,7 @@ public final class WordListBuilder {
         name = readWord(
             gameContext.inputReader(),
             gameContext.outputWriter(),
-            false);
+            GameUtils.ReadWordMode.WORD);
     }
 
     public void save() {

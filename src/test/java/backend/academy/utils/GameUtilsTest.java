@@ -93,15 +93,18 @@ class GameUtilsTest {
     void readWordValidInput() throws IOException {
         try (BufferedReader correctWordLower = new BufferedReader(new StringReader("hello\n"));
              BufferedReader correctWordUpper = new BufferedReader(new StringReader("WORLD\n"));
-             BufferedReader correctWordWithSpaces = new BufferedReader(new StringReader("   test   \n"))) {
+             BufferedReader correctWordWithSpaces = new BufferedReader(new StringReader("test test   \n"));
+             BufferedReader emptyHint = new BufferedReader(new StringReader("\n"))) {
 
-            String resultLower = readWord(correctWordLower, outputWriter, true);
-            String resultUpper = readWord(correctWordUpper, outputWriter, true);
-            String resultWithSpaces = readWord(correctWordWithSpaces, outputWriter, true);
+            String resultLower = readWord(correctWordLower, outputWriter, GameUtils.ReadWordMode.WORD);
+            String resultUpper = readWord(correctWordUpper, outputWriter, GameUtils.ReadWordMode.WORD);
+            String resultWithSpaces = readWord(correctWordWithSpaces, outputWriter, GameUtils.ReadWordMode.DESCRIPTION);
+            String resultEmptyHint = readWord(emptyHint, outputWriter, GameUtils.ReadWordMode.HINT);
 
             assertEquals("hello", resultLower);
             assertEquals("world", resultUpper);
-            assertEquals("test", resultWithSpaces);
+            assertEquals("test test", resultWithSpaces);
+            assertEquals("", resultEmptyHint);
         }
     }
 
@@ -109,11 +112,13 @@ class GameUtilsTest {
     void readWordInvalidInput() throws IOException {
         try (BufferedReader invalidWordNumbers = new BufferedReader(new StringReader("12345\nhello\n"));
              BufferedReader invalidWordSymbols = new BufferedReader(new StringReader("@hello!\nWORLD\n"));
-             BufferedReader invalidWordMix = new BufferedReader(new StringReader("hello123\n   test   \n"))) {
+             BufferedReader invalidWordMix = new BufferedReader(new StringReader("hello hello\n   test   \n"))) {
 
-            String resultInvalidNumbers = readWord(invalidWordNumbers, outputWriter, false);
-            String resultInvalidSymbols = readWord(invalidWordSymbols, outputWriter, false);
-            String resultInvalidMix = readWord(invalidWordMix, outputWriter, false);
+            String resultInvalidNumbers =
+                readWord(invalidWordNumbers, outputWriter, GameUtils.ReadWordMode.DESCRIPTION);
+            String resultInvalidSymbols =
+                readWord(invalidWordSymbols, outputWriter, GameUtils.ReadWordMode.DESCRIPTION);
+            String resultInvalidMix = readWord(invalidWordMix, outputWriter, GameUtils.ReadWordMode.WORD);
 
             assertTrue(outputStream.toString().contains(INPUT_NOT_RECOGNIZED));
             assertEquals("hello", resultInvalidNumbers);

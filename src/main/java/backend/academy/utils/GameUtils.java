@@ -66,7 +66,7 @@ public class GameUtils {
     public static String readWord(
         BufferedReader inputReader,
         PrintStream outputWriter,
-        boolean emptyMode
+        ReadWordMode wordMode
     ) {
         while (true) {
             String input = inputReader.readLine();
@@ -74,9 +74,12 @@ public class GameUtils {
                 continue;
             }
             input = input.toLowerCase(Locale.ROOT).trim();
-            if (emptyMode && input.matches("[a-z]*")) {
-                return input;
-            } else if (input.matches("[a-z]+")) {
+            String regex = switch (wordMode) {
+                case WORD -> "[a-z]+";
+                case HINT -> "[a-z ]*";
+                case DESCRIPTION -> "[a-z ]+";
+            };
+            if (input.matches(regex)) {
                 return input;
             } else {
                 outputWriter.print(INPUT_NOT_RECOGNIZED);
@@ -105,5 +108,9 @@ public class GameUtils {
             }
             outputWriter.print(INPUT_NOT_RECOGNIZED);
         }
+    }
+
+    public enum ReadWordMode {
+        DESCRIPTION, WORD, HINT
     }
 }
