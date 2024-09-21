@@ -54,7 +54,16 @@ public final class WordListBuilder {
             gameContext.outputWriter(),
             0, STAGES);
 
-        Word newWord = new Word(content, theme, hint, new Difficulty(difficultyName, difficultyLevel));
+        Difficulty newDif = Difficulty.builder()
+            .name(difficultyName)
+            .level(difficultyLevel)
+            .build();
+        Word newWord = Word.builder()
+            .content(content)
+            .theme(theme)
+            .hint(hint)
+            .difficulty(newDif)
+            .build();
         words.add(newWord);
     }
 

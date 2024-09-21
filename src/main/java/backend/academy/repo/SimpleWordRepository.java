@@ -53,8 +53,7 @@ public class SimpleWordRepository implements WordRepository {
             words.stream().map(w -> w.difficulty().level()).toList());
         Map<String, Integer> difficulties = new HashMap<>();
         List<Word> wordList = new ArrayList<>(words);
-        for (int i = 0; i < words.size(); i++) {
-            Word word = wordList.get(i);
+        for (Word word : wordList) {
             Difficulty difficulty = word.difficulty();
             difficulties.putIfAbsent(
                 difficulty.name(),
