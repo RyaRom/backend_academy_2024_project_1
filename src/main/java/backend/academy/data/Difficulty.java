@@ -1,8 +1,10 @@
 package backend.academy.data;
 
+import lombok.Builder;
 import static java.lang.Math.abs;
 import static java.lang.Math.max;
 
+@Builder
 @SuppressWarnings("MultipleStringLiterals")
 public record Difficulty(String name, int level) implements Comparable<Difficulty> {
     public Difficulty(String name, int level) {

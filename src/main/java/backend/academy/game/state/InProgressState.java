@@ -95,7 +95,7 @@ public class InProgressState implements GameState {
         if (!wrongLetters.add(letter)) {
             return;
         }
-        int step = gameContext.word()
+        int step = gameContext
             .difficulty()
             .level();
 
